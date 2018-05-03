@@ -1,0 +1,23 @@
+{
+  "name": "torrent-scrapper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "node app.js"
+  },
+  "author": "Arthur Knoepflin <arthur.knoepflin@epitech.eu> (https://arthur.knoeflin.eu/)",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.2",
+    "deluge": "^1.7.1",
+    "ejs": "^2.5.9",
+    "express": "^4.16.3",
+    "i18n": "^0.8.3",
+    "node-json-db": "^0.7.5",
+    "query-string": "^6.1.0",
+    "serve-static": "^1.13.2",
+    "sha256": "^0.2.0"
+  }
+}

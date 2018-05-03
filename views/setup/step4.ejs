@@ -1,0 +1,52 @@
+<section class="section">
+    <div class="container">
+        <div class="notification content">
+            <h2 class="subtitle is-2">
+                <%= __("Downloading software") %>
+            </h2>
+            <p class="subtitle">
+                <%= __("Set up a torrent downloading software") %> :
+            </p>
+            <div class="spacer"></div>
+            <div class="field">
+                <div class="control">
+                    <label class="checkbox">
+                        <input type="checkbox" class="active-deluge" <% if (typeof deluge.host !== "undefined") { %><%= "checked disabled" %><% } %>>
+                        <%= __("Use Deluge") %>
+                    </label>
+                </div>
+            </div>
+            <div class="box deluge-box hide">
+                <div class="content">
+                    <h4 class="is-subtitle is-4"><%= __("Deluge") %></h4>
+                    <div class="field">
+                        <label class="label"><%= __("Host") %></label>
+                        <div class="control">
+                            <input class="input" id="host" type="text" placeholder="<%= __("Deluge host ...") %>">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label"><%= __("Password") %></label>
+                        <div class="control">
+                            <input class="input" id="password" type="password" placeholder="<%= __("Deluge password ...") %>">
+                        </div>
+                    </div>
+                    <div class="field test-connect-deluge">
+                        <div class="control">
+                            <button class="button is-link"><%= __("Connect") %></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="spacer"></div>
+            <div class="field valid is-grouped">
+                <div class="control">
+                    <a href="/setup/2"><button class="button is-text"><%= __("Previous") %></button></a>
+                </div>
+                <div class="control">
+                    <button class="button valid-btn is-primary"><%= __("End") %></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

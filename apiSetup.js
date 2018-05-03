@@ -1,0 +1,130 @@
+const app = require('express').Router();
+const bodyParser = require('body-parser');
+const hash = require('sha256');
+const deluge = require('deluge');
+const axios = require('axios');
+const qs = require('query-string');
+const db = require('./database');
+
+const language = ["en", "fr"];
+
+app
+.use((req, res, next) => {
+    try {
+        if (db.getData('/configured'))
+            return res.json({success: false, code: "SETUP_DISABLED"});
+        next();
+    } catch (err) {
+        next();
+    }
+})
+.use(bodyParser.urlencoded({extended: false}))
+.post('/1', (req, res) => {
+    new Promise((resolve, reject) => {
+        if (!req.body.name || req.body.name.length < 4 || !req.body.language) {
+            return reject({code: "INV_PARAM"});
+        }
+        if (language.indexOf(req.body.language) == -1) {
+            return reject({code: "INV_PARAM"});
+        }
+        try {
+            db.push('/config/basic', {name: req.body.name, language: req.body.language})
+            return resolve();
+        } catch (err) {
+            return reject({code: "UNK_ERR"});
+        }
+    })
+    .then((data) => {
+        res.json({
+            success: true,
+            data: data
+        });
+    })
+    .catch((data) => {
+        res.json({
+            success: false,
+            data: data
+        });
+    });
+})
+.post('/2', (req, res) => {
+    new Promise((resolve, reject) => {
+        if (!req.body.login || req.body.login.length < 3 || !req.body.password || req.body.password.length < 3) {
+            return reject({code: "INV_PARAM"});
+        }
+        try {
+            db.push('/config/auth', {login: req.body.login, password: hash(req.body.password)})
+            return resolve();
+        } catch (err) {
+            return reject({code: "UNK_ERR"});
+        }
+    })
+    .then((data) => {
+        res.json({
+            success: true,
+            data: data
+        });
+    })
+    .catch((data) => {
+        res.json({
+            success: false,
+            data: data
+        });
+    });
+})
+.post('/4/deluge', (req, res) => {
+    new Promise((resolve, reject) => {
+        if (!req.body.host || req.body.host.length < 3 || !req.body.password || req.body.password.length < 3) {
+            return reject({code: "INV_PARAM"});
+        }
+        axios({
+            url: req.body.host,
+            method: "POST",
+            headers: {'Content-Type': 'application/json'},
+            data: {method: "auth.login", params: [req.body.password], id: 1}
+        })
+        .then((resp) => {
+            if (resp.data.error || !resp.data.result) {
+                return reject();
+            }
+            db.push("/config/dlsoft/deluge", {
+                host: req.body.host,
+                password: req.body.password
+            });
+            resolve();
+        })
+        .catch((data) => {
+            reject();
+        });
+    })
+    .then((data) => {
+        res.json({
+            success: true,
+            data: data
+        });
+    })
+    .catch((data) => {
+        res.json({
+            success: false,
+            data: data
+        });
+    });
+})
+.post('/end', (req, res) => {
+    try {
+        db.push("/configured", true);
+        res.json({success: true});
+    } catch (err) {
+        res.json({success: false});
+    }
+})
+.use((req, res) => {
+    res.status(404).json({
+        success: false,
+        data: {
+            code: "ERR_NOT_FOUND"
+        }
+    });
+})
+
+module.exports = app;

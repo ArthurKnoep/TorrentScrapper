@@ -1,0 +1,86 @@
+<body>
+    <nav class="navbar is-link">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="https://arthur.knoepflin.eu">
+            <img src="https://i1.wp.com/tomsapk.com/wp-content/uploads/2017/12/Zeta-torrent-pro.png?resize=300%2C300" alt="Torrent Scrapper" width="30" height="28">
+            </a>
+            <div class="navbar-burger burger" data-target="navBar">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+
+        <div id="navBar" class="navbar-menu">
+            <div class="navbar-start">
+            <a class="navbar-item" href="/">
+                Accueil
+            </a>
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link" href="/documentation/overview/start/">
+                Docs
+                </a>
+                <div class="navbar-dropdown is-boxed">
+                <a class="navbar-item" href="/documentation/overview/start/">
+                    Overview
+                </a>
+                <a class="navbar-item" href="https://bulma.io/documentation/modifiers/syntax/">
+                    Modifiers
+                </a>
+                <a class="navbar-item" href="https://bulma.io/documentation/columns/basics/">
+                    Columns
+                </a>
+                <a class="navbar-item" href="https://bulma.io/documentation/layout/container/">
+                    Layout
+                </a>
+                <a class="navbar-item" href="https://bulma.io/documentation/form/general/">
+                    Form
+                </a>
+                <hr class="navbar-divider">
+                <a class="navbar-item" href="https://bulma.io/documentation/elements/box/">
+                    Elements
+                </a>
+                <a class="navbar-item is-active" href="https://bulma.io/documentation/components/breadcrumb/">
+                    Components
+                </a>
+                </div>
+            </div>
+            </div>
+
+            <div class="navbar-end">
+            </div>
+        </div>
+    </nav>
+    <section class="hero is-info">
+        <div class="hero-body">
+            <div class="container">
+            <h1 class="title">
+                Torrent Scrapper
+            </h1>
+            <h2 class="subtitle">
+                <%= __("Your scrapper seems to be not configured") %>
+            </h2>
+            </div>
+        </div>
+    </section>
+    <%- include(step_view) %>
+    <footer class="footer fix-footer">
+        <div class="container">
+            <div class="content has-text-centered">
+            <p>
+                <strong>Torrent scrapper</strong> est un projet <a href="https://github.com/ArthurKnoep">open source</a> développé par Arthur Knoepflin.<br>
+                <%- __("This project use Bulma CSS framework") %>
+            </p>
+            </div>
+        </div>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/assets/js/setup.js"></script>
+    <%
+    if (typeof custom_scripts !== "undefined") {
+        custom_scripts.forEach(function(elem) { %>
+            <script src="<%= elem %>"></script>
+        <% });
+    }
+    %>
+</body>

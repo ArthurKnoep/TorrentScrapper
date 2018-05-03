@@ -1,0 +1,35 @@
+<section class="section">
+    <div class="container">
+        <div class="notification content">
+            <h2 class="subtitle is-2">
+                <%= __("Security before all") %>
+            </h2>
+            <p class="subtitle">
+                <%= __("Set up a secured account") %> :
+            </p>
+            <div class="field login-field">
+                <label class="label"><%- __("Login") %></label>
+                <div class="control">
+                    <input class="input" id="login" type="text" placeholder="<%= __("Login ...") %>">
+                    <p class="help"><%= __("This is your admin login") %></p>
+                </div>
+            </div>
+            <div class="field password-field">
+                    <label class="label"><%- __("Password") %></label>
+                    <div class="control">
+                        <input class="input" id="password" type="password" placeholder="<%= __("Password ...") %>">
+                        <p class="help"><%= __("This is your admin password") %></p>
+                    </div>
+                </div>
+            <div class="spacer"></div>
+            <div class="field is-grouped">
+                <div class="control">
+                    <a href="/setup/1"><button class="button is-text"><%= __("Previous") %></button></a>
+                </div>
+                <div class="control">
+                    <button class="button is-link"><%- __("Next") %></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

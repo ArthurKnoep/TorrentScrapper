@@ -1,0 +1,41 @@
+<section class="section">
+    <div class="container">
+        <div class="notification content">
+            <h2 class="subtitle is-2">
+                <%= __("Let start") %> :
+            </h2>
+            <p class="subtitle">
+                <%= __("Some basic information") %> :
+            </p>
+            <div class="field name-field">
+                <label class="label"><%- __("Scrapper name") %></label>
+                <div class="control">
+                    <input class="input" id="name" type="text" placeholder="<%= __("Name ...") %>">
+                    <p class="help"><%= __("This name will appear on the page title and in the menu") %></p>
+                </div>
+            </div>
+            <div class="spacer"></div>
+            <div class="field language-field">
+                <label class="label"><%- __("Interface language") %></label>
+                <p class="control has-icons-left">
+                    <span class="select">
+                    <select id="language">
+                        <option value="none" selected><%- __("Choice") %></option>
+                        <option value="fr">Français</option>
+                        <option value="en">English</option>
+                    </select>
+                    </span>
+                    <span class="icon is-small is-left">
+                    <i class="fas fa-globe"></i>
+                    </span>
+                </p>
+            </div>
+            <div class="spacer"></div>
+            <div class="field">
+                <div class="control">
+                    <button class="button is-link"><%- __("Next") %></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
