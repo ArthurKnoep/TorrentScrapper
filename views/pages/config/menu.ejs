@@ -1,0 +1,37 @@
+<div class="spacer"></div>
+<div class="container box">
+    <div class="content">
+        <h2 class="is-subtitle is-2"><%= __("Edit menu") %></h2>
+    </div>
+    <% if (menu) {
+        menu.forEach(function(elem) { %>
+        <div class="box">
+            <div class="field is-horizontal">
+                <div class="field-body">
+                    <div class="field">
+                        <label class="label"><%= __("Name") %></label>
+                        <p class="control is-expanded">
+                            <input class="input" type="text" placeholder="<%= __("Name ...") %>" value="<%= elem.text %>">
+                        </p>
+                    </div>
+                    <div class="field">
+                        <label class="label"><%= __("Url") %></label>
+                        <p class="control is-expanded">
+                            <input class="input" type="text" placeholder="<%= __("Url ...") %>" value="<%= elem.url %>">
+                        </p>
+                    </div>
+                    <div class="field">
+                        <label class="label">
+                            <%= __("Open in new tab") %>
+                        </label>
+                        <input type="checkbox" <% if (elem.new_tab) { %>checked<% } %>>
+                    </div>
+                    <div class="field relative">
+                        <a class="delete is-large center-in-relative is-danger"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <% });
+    } %>
+</div>

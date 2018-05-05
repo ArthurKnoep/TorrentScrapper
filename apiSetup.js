@@ -4,6 +4,7 @@ const hash = require('sha256');
 const deluge = require('deluge');
 const axios = require('axios');
 const qs = require('query-string');
+const url = require('url');
 const db = require('./database');
 
 const language = ["en", "fr"];
@@ -95,6 +96,56 @@ app
         })
         .catch((data) => {
             reject();
+        });
+    })
+    .then((data) => {
+        res.json({
+            success: true,
+            data: data
+        });
+    })
+    .catch((data) => {
+        res.json({
+            success: false,
+            data: data
+        });
+    });
+})
+.post('/4/transmission', (req, res) => {
+    new Promise((resolve, reject) => {
+        if (!req.body.host || req.body.host.length < 3 || !req.body.login || req.body.login.length < 3 || !req.body.password || req.body.password.length < 3) {
+            return reject({code: "INV_PARAM"});
+        }
+        axios({
+            url: req.body.host,
+            method: "POST",
+            auth: {username: req.body.login, password: req.body.password}
+        })
+        .then((resp) => {
+            reject({code: "ERR", msg: __("The host is reachable, but it does not seem to be a transmission server")});
+        })
+        .catch((data) => {
+            try {
+                if (!data || !data.response) {
+                    return reject({code: "ERR", msg: __("The host is unreachable")});
+                }
+                if (data.response.status == 409 && typeof data.response.headers["x-transmission-session-id"] == "string") {
+                    db.push("/config/dlsoft/transmission", {
+                        host: req.body.host,
+                        login: req.body.login,
+                        password: req.body.password
+                    });
+                    return resolve();
+                } else {
+                    if (data.response.status == 401)
+                        return reject({code: "ERR", msg: __("Bad login or bad password")});
+                    else
+                        return reject({code: "ERR", msg: __("This server is not a valid transmission server")});
+                }
+            } catch (err) {
+                console.log(err);
+                return reject({code: "UNK_ERR", msg: __("Unknown error")});
+            }
         });
     })
     .then((data) => {

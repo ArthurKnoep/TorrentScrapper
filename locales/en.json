@@ -1,6 +1,6 @@
 {
 	"Some basic information": "Some basic information",
-	"Your scrapper seems to be not configured": "Your scrapper seems to be not configured",
+	"Your scrapper doesn't seems to be configured": "Your scrapper seems to be not configured",
 	"Let start": "Let start",
 	"This project use Bulma CSS framework": "This project use Bulma CSS framework",
 	"Security before all": "Security before all",
@@ -28,5 +28,17 @@
 	"Deluge host ...": "Deluge host ...",
 	"Deluge password ...": "Deluge password ...",
 	"Connect": "Connect",
-	"End": "End"
+	"End": "End",
+	"Basic informations": "Basic informations",
+	"Authentification": "Authentification",
+	"Cannot authenticate user": "Cannot authenticate user",
+	"Connection": "Connection",
+	"You need to login to %s": "You need to login to %s",
+	"Password...": "Password...",
+	"Remember me": "Remember me",
+	"Home": "Home",
+	"Settings": "Settings",
+	"Account": "Account",
+	"Disconnect": "Disconnect",
+	"Menu": "Menu"
 }

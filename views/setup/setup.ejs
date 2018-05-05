@@ -12,41 +12,16 @@
         </div>
 
         <div id="navBar" class="navbar-menu">
-            <div class="navbar-start">
-            <a class="navbar-item" href="/">
-                Accueil
-            </a>
-            <div class="navbar-item has-dropdown is-hoverable">
-                <a class="navbar-link" href="/documentation/overview/start/">
-                Docs
-                </a>
-                <div class="navbar-dropdown is-boxed">
-                <a class="navbar-item" href="/documentation/overview/start/">
-                    Overview
-                </a>
-                <a class="navbar-item" href="https://bulma.io/documentation/modifiers/syntax/">
-                    Modifiers
-                </a>
-                <a class="navbar-item" href="https://bulma.io/documentation/columns/basics/">
-                    Columns
-                </a>
-                <a class="navbar-item" href="https://bulma.io/documentation/layout/container/">
-                    Layout
-                </a>
-                <a class="navbar-item" href="https://bulma.io/documentation/form/general/">
-                    Form
-                </a>
-                <hr class="navbar-divider">
-                <a class="navbar-item" href="https://bulma.io/documentation/elements/box/">
-                    Elements
-                </a>
-                <a class="navbar-item is-active" href="https://bulma.io/documentation/components/breadcrumb/">
-                    Components
-                </a>
-                </div>
+            <div class="navbar-start navbar-content-vertical">
+                <nav class="breadcrumb has-bullet-separator" aria-label="breadcrumbs">
+                    <% let menu = [__("Basic informations"), __("Authentification"), __("Sources"), __("Downloading software")]; %>
+                    <ul>
+                        <% for (let i = 0; i < menu.length && i < step_setup; i++) { %>
+                        <li class="<% if (step_setup - 1 == i) { %>is-active<% } else { %> bc-bullet<% } %>"><a href="/setup/<%= i + 1%>"><%= menu[i] %></a></li>
+                        <% } %>
+                    </ul>
+                  </nav>
             </div>
-            </div>
-
             <div class="navbar-end">
             </div>
         </div>
@@ -58,7 +33,7 @@
                 Torrent Scrapper
             </h1>
             <h2 class="subtitle">
-                <%= __("Your scrapper seems to be not configured") %>
+                <%= __("Your scrapper doesn't seems to be configured") %>
             </h2>
             </div>
         </div>

@@ -89,8 +89,17 @@ function getLang() {
     }
 }
 
+function getMenu() {
+    try {
+        return db.getData('/config/menu');
+    } catch (err) {
+        return [];
+    }
+}
+
 module.exports = {
     checkConfig: checkConfig,
     getName: getName,
-    getLang: getLang
+    getLang: getLang,
+    getMenu: getMenu
 };
