@@ -73,6 +73,43 @@ app
         });
     });
 })
+.post('/3', (req, res) => {
+    new Promise((resolve, reject) => {
+        let json;
+        try {
+            json = JSON.parse(req.body.data);
+        } catch (err) {
+            reject({code: "INV_PARAM"});
+        }
+        let key = Object.keys(json);
+        for (let i = 0; key[i]; i++) {
+            let tmp;
+            try {
+                let Provid = require(json[key[i]].file);
+                tmp = new Provid();
+            } catch (err) {
+                continue;
+            }
+            db.push('/config/provider/'+key[i], {
+                file: json[key[i]].file,
+                active: json[key[i]].checked
+            });
+        }
+        resolve(json);
+    })
+    .then((data) => {
+        res.json({
+            success: true,
+            data: data
+        });
+    })
+    .catch((data) => {
+        res.json({
+            success: false,
+            data: data
+        });
+    });
+})
 .post('/4/deluge', (req, res) => {
     new Promise((resolve, reject) => {
         if (!req.body.host || req.body.host.length < 3 || !req.body.password || req.body.password.length < 3) {

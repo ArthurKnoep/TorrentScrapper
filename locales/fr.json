@@ -57,5 +57,10 @@
 	"Name": "Nom",
 	"Url": "Url",
 	"Url ...": "Url ...",
-	"Open in new tab": "Ouvrir dans un nouvel onglet"
+	"Open in new tab": "Ouvrir dans un nouvel onglet",
+	"Search": "Recherche",
+	"Base url": "Url de base",
+	"base url ...": ": url ...",
+	"Use": "Utiliser",
+	"password ...": "mot de passe ..."
 }

@@ -1,6 +1,9 @@
 .spacer {
     height: 30px;
 }
+.big-spacer {
+    height: 100px;
+}
 .footer {
     padding: 3rem 1.5rem 3rem;
 }

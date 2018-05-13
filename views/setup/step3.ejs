@@ -8,6 +8,17 @@
                 <%= __("Set up sources") %> :
             </p>
             <div class="spacer"></div>
+            <% for (let i = 0; data[i]; i++) { %>
+            <div class="field">
+                <div class="control">
+                    <label class="checkbox">
+                        <input type="checkbox" data-name="<%= data[i].name %>" data-file="<%= data[i].file %>" class="provider provider-<%= i %><% if (data[i].need_logged) { %> need-logged<% } %>" <% if (!data[i].need_logged) { %>checked<% } %>>
+                        <%= __("Use") + " " + data[i].name %>
+                    </label>
+                </div>
+            </div>
+            <% } %>
+            <div class="spacer"></div>
             <div class="field is-grouped">
                 <div class="control">
                     <a href="/setup/2"><button class="button is-text"><%= __("Previous") %></button></a>

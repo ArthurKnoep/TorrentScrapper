@@ -40,5 +40,7 @@
 	"Settings": "Settings",
 	"Account": "Account",
 	"Disconnect": "Disconnect",
-	"Menu": "Menu"
+	"Menu": "Menu",
+	"Configuration": "Configuration",
+	"Configuration - %s": "Configuration - %s"
 }
