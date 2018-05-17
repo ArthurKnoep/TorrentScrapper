@@ -50,10 +50,10 @@ class Torrent9 {
                     let peers = -1;
                     try {
                         name = elem.childNodes[1].childNodes[2].text;
-                        if (name.search(/720/) == 1) {
+                        if (/720/.exec(name)) {
                             quality = "720p";
                         }
-                        if (name.search(/1080/) == 1) {
+                        if (/1080/.exec(name)) {
                             quality = "1080p";
                         }
                     } catch (err) {

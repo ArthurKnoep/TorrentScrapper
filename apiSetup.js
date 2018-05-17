@@ -6,6 +6,7 @@ const axios = require('axios');
 const qs = require('query-string');
 const url = require('url');
 const db = require('./database');
+const utils = require('./utils');
 
 const language = ["en", "fr"];
 
@@ -206,6 +207,7 @@ app
 })
 .post('/end', (req, res) => {
     try {
+        db.push('/config/cookieCipher', [utils.randomString(32), utils.randomString(32)]);
         db.push("/configured", true);
         res.json({success: true});
     } catch (err) {

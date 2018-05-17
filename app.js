@@ -1,5 +1,10 @@
+var app = require('express')();
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
+
+server.listen(8086);
+
 const static = require('serve-static');
-const express = require('express');
 const cookieSession = require('cookie-session');
 const i18n = require('i18n');
 const path = require('path');
@@ -9,6 +14,7 @@ const apiSetupRoute = require('./apiSetup');
 const apiRoute = require('./api');
 const configRoute = require('./configRoute');
 const provider = require('./provider');
+const socketHandler = require('./searchSock');
 
 const torrent9 = require('./providers/torrent9');
 const yts = require('./providers/yts');
@@ -30,15 +36,19 @@ i18n.configure({
     cookie: 'lang'
 });
 
-const app = express();
 app.use(i18n.init);
 app.use(cookieSession({
     name: 'session',
-    keys: ["fezfe"],
+    httpOnly: false,
+    keys: util.getCookie(),
     maxAge: 24 * 60 * 60 * 1000
 }));
 
 app.set('views', path.join(__dirname, "views"));
+
+io.on('connection', (socket) => {
+    socketHandler(socket);
+});
 
 app
 .use((req, res, next) => {res.locals.setLocale(util.getLang()); next()})
@@ -66,12 +76,11 @@ app
 .use('/config', configRoute)
 .all('/', (req, res) => {
     res.render('window.ejs', {view: 'index.ejs', view_i: 'pages/home.ejs', menu: util.getMenu(),  is_connected: req.session.connected,
-    title_page: util.getName()});
+    custom_scripts: ["https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.0/socket.io.js", "/assets/js/pages/home.js"],
+    title_page: util.getName(), cat: provider});
 })
 .all('/logout', (req, res) => {
     req.session.connected = undefined;
     req.session = null;
     res.redirect('/');
 })
-
-app.listen(8086);

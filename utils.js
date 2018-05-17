@@ -1,5 +1,14 @@
 const db = require('./database');
 
+function randomString(length) {
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for (var i = 0; i < length; i++)
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+    return (text);
+  }
+
 function checkConfigBasic() {
     try {
         db.getData('/config/basic');
@@ -97,9 +106,19 @@ function getMenu() {
     }
 }
 
+function getCookie() {
+    try {
+        return db.getData('/config/cookieCipher');
+    } catch (err) {
+        return ["tmpvalue"];
+    }
+}
+
 module.exports = {
     checkConfig: checkConfig,
     getName: getName,
     getLang: getLang,
-    getMenu: getMenu
+    getMenu: getMenu,
+    getCookie: getCookie,
+    randomString: randomString
 };

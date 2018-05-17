@@ -29,3 +29,12 @@
 .delete.is-danger {
     background-color: rgba(255, 0, 0, 0.2)
 }
+
+.search-tag {
+    transition: 0.2s ease-in-out;
+}
+
+.search-tag:hover {
+    cursor: pointer;
+    background-color: #1b7fc1 !important;
+}

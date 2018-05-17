@@ -42,5 +42,6 @@
 	"Disconnect": "Disconnect",
 	"Menu": "Menu",
 	"Configuration": "Configuration",
-	"Configuration - %s": "Configuration - %s"
+	"Configuration - %s": "Configuration - %s",
+	"Search": "Search"
 }

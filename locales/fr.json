@@ -46,7 +46,7 @@
 	"Configuration - %s": "Configuration - %s",
 	"Home": "Accueil",
 	"Account": "Compte",
-	"Settings": "Parametres",
+	"Settings": "Paramètres",
 	"Disconnect": "Deconnexion",
 	"Connection": "Connexion",
 	"Password...": "Mot de passe...",
@@ -66,5 +66,11 @@
 	"%s username ...": "Nom d'utilisateur de %s ...",
 	"%s password ...": "Mot de passe de %s ...",
 	"%s login": "Connexion à %s",
-	"Validate": "Validate"
+	"Movies": "Films",
+	"Series": "Séries",
+	"Animes": "Animés",
+	"Music": "Musique",
+	"Ebook": "Ebook",
+	"is a project": "est un project",
+	"developped by": "developpé par"
 }
