@@ -18,7 +18,6 @@ route
         }
         if (req.body.login === auth.login && hash(req.body.password) === auth.password) {
             req.session.connected = true;
-            console.log(req.session);
             resolve();
         } else {
             reject({code: "BAD_LOGIN"});

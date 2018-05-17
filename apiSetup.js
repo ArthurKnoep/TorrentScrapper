@@ -19,7 +19,8 @@ app
         next();
     }
 })
-.use(bodyParser.urlencoded({extended: false}))
+.use(bodyParser.json())
+// .use(bodyParser.urlencoded({extended: false}))
 .post('/1', (req, res) => {
     new Promise((resolve, reject) => {
         if (!req.body.name || req.body.name.length < 4 || !req.body.language) {
@@ -75,27 +76,33 @@ app
 })
 .post('/3', (req, res) => {
     new Promise((resolve, reject) => {
-        let json;
-        try {
-            json = JSON.parse(req.body.data);
-        } catch (err) {
-            reject({code: "INV_PARAM"});
-        }
-        let key = Object.keys(json);
+        let key = Object.keys(req.body);
         for (let i = 0; key[i]; i++) {
             let tmp;
             try {
-                let Provid = require(json[key[i]].file);
+                let Provid = require(req.body[key[i]].file);
                 tmp = new Provid();
             } catch (err) {
                 continue;
             }
-            db.push('/config/provider/'+key[i], {
-                file: json[key[i]].file,
-                active: json[key[i]].checked
-            });
+            let data = {
+                file: req.body[key[i]].file,
+                baseUrl: req.body[key[i]].baseUrl,
+                active: req.body[key[i]].checked,
+                needLogged: req.body[key[i]].needLogged
+            };
+            if (req.body[key[i]].needLogged) {
+                if (req.body[key[i]].checked)
+                    data.auth = {
+                        login: req.body[key[i]].login,
+                        password: req.body[key[i]].password,
+                    }
+                else
+                    data.auth = {};
+            }
+            db.push('/config/provider/'+key[i], data);
         }
-        resolve(json);
+        resolve();
     })
     .then((data) => {
         res.json({
@@ -180,7 +187,6 @@ app
                         return reject({code: "ERR", msg: __("This server is not a valid transmission server")});
                 }
             } catch (err) {
-                console.log(err);
                 return reject({code: "UNK_ERR", msg: __("Unknown error")});
             }
         });

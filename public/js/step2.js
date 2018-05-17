@@ -25,7 +25,8 @@ $btn.click(function() {
     $btn.removeClass('is-danger');
     $.ajax('/api/setup/2', {
         method: 'POST',
-        data: form,
+        data: JSON.stringify(form),
+        contentType: "application/json; charset=utf-8",
         success: function(data) {
             $btn.removeClass('is-loading');
             if (data.success) {

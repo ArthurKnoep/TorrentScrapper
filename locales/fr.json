@@ -62,5 +62,9 @@
 	"Base url": "Url de base",
 	"base url ...": ": url ...",
 	"Use": "Utiliser",
-	"password ...": "mot de passe ..."
+	"password ...": "mot de passe ...",
+	"%s username ...": "Nom d'utilisateur de %s ...",
+	"%s password ...": "Mot de passe de %s ...",
+	"%s login": "Connexion à %s",
+	"Validate": "Validate"
 }

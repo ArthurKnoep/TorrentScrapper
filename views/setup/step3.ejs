@@ -12,11 +12,37 @@
             <div class="field">
                 <div class="control">
                     <label class="checkbox">
-                        <input type="checkbox" data-name="<%= data[i].name %>" data-file="<%= data[i].file %>" class="provider provider-<%= i %><% if (data[i].need_logged) { %> need-logged<% } %>" <% if (!data[i].need_logged) { %>checked<% } %>>
+                        <input type="checkbox" data-toggle="<%= data[i].name %>-box" data-name="<%= data[i].name %>" data-base-url="<%= data[i].base_url %>" data-file="<%= data[i].file %>" class="provider provider-<%= i %><% if (data[i].need_logged) { %> need-logged<% } %>" <% if (data[i].active) { %>checked<% } %>>
                         <%= __("Use") + " " + data[i].name %>
                     </label>
                 </div>
             </div>
+            <% if (data[i].need_logged) { %>
+            <div class="box<% if (!data[i].active) { %> hide<% } %> <%= data[i].name %>-box">
+                <div class="content">
+                    <h4 class="is-subtitle is-4"><%= __("%s login", data[i].name) %></h4>
+                    <div class="field field-<%= data[i].name %>">
+                        <label class="label"><%= __("Username") %></label>
+                        <div class="control">
+                            <input class="input" id="<%= data[i].name %>-login" type="text" placeholder="<%=  __("%s username ...", data[i].name) %>" value="<%= data[i].auth.login %>">
+                        </div>
+                        <p class="help is-danger"></p>
+                    </div>
+                    <div class="field field-<%= data[i].name %>">
+                        <label class="label"><%= __("Password") %></label>
+                        <div class="control">
+                            <input class="input" id="<%= data[i].name %>-password" type="password" placeholder="<%= __("%s password ...", data[i].name) %>" value="<%= data[i].auth.password %>">
+                        </div>
+                        <p class="help is-danger"></p>
+                    </div>
+                    <!--<div class="field test-connect-<%= data[i].name %>ssion">
+                        <div class="control">
+                            <button class="button is-link"><%= __("Validate") %></button>
+                        </div>
+                    </div>-->
+                </div>
+            </div>
+            <% } %>
             <% } %>
             <div class="spacer"></div>
             <div class="field is-grouped">

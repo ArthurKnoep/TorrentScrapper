@@ -38,7 +38,19 @@ app
             } catch (err) {
                 continue;
             }
-            data.push({name: tmp.getName(), categories: tmp.getCategories(), need_logged: tmp.needLogged(), base_url: tmp.getBaseUrl(), file: path.join(__dirname, "/providers", rst[i])});
+            let d = undefined;
+            try {
+                d = db.getData("/config/provider/"+tmp.getName());
+            } catch (err) {}
+            data.push({
+                name: tmp.getName(),
+                categories: tmp.getCategories(),
+                need_logged: tmp.needLogged(),
+                base_url: tmp.getBaseUrl(),
+                active: (d) ? d.active : false,
+                file: path.join(__dirname, "/providers", rst[i]),
+                auth: (d && d.auth) ? d.auth : {login: "", password: ""}
+            });
         }
         res.render('window.ejs', {view: 'setup/setup.ejs', step_view: 'step3.ejs', title_page: __("Configuration - %s", utils.getName()), custom_scripts: [
             "/assets/js/step3.js"

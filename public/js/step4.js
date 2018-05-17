@@ -52,7 +52,8 @@ $btnDeluge.click(function() {
     $('#deluge-password').removeClass('is-success').removeClass('is-danger');
     $.ajax('/api/setup/4/deluge', {
         method: 'POST',
-        data: form,
+        data: JSON.stringify(form),
+        contentType: "application/json; charset=utf-8",
         success: function(data) {
             if (data.success) {
                 $btnDeluge.removeClass('is-loading');
@@ -115,7 +116,8 @@ $btnTransmi.click(function() {
     $transmi.password.removeClass('is-danger').removeClass('is-success');
     $.ajax('/api/setup/4/transmission', {
         method: 'POST',
-        data: form,
+        data: JSON.stringify(form),
+        contentType: "application/json; charset=utf-8",
         success: function(data) {
             if (data.success) {
                 $btnTransmi.removeClass('is-loading');
