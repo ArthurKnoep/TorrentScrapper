@@ -43,5 +43,11 @@
 	"Menu": "Menu",
 	"Configuration": "Configuration",
 	"Configuration - %s": "Configuration - %s",
-	"Search": "Search"
+	"Search": "Search",
+	"Name": "Name",
+	"Size": "Size",
+	"Quality": "Quality",
+	"Language": "Language",
+	"Seeds / Peers": "Seeds / Peers",
+	"Actions": "Actions"
 }

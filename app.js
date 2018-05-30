@@ -76,8 +76,8 @@ app
 .use('/config', configRoute)
 .all('/', (req, res) => {
     res.render('window.ejs', {view: 'index.ejs', view_i: 'pages/home.ejs', menu: util.getMenu(),  is_connected: req.session.connected,
-    custom_scripts: ["https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.0/socket.io.js", "/assets/js/pages/home.js"],
-    title_page: util.getName(), cat: provider});
+    custom_scripts: ["https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.0/socket.io.js", "http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js", "/assets/js/pages/home.js"],
+    title_page: util.getName(), cat: provider.cat});
 })
 .all('/logout', (req, res) => {
     req.session.connected = undefined;

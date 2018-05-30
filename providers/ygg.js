@@ -12,18 +12,18 @@ class Ygg {
         return "https://yggtorrent.io/";
     }
     getCategories() {
-        return [provider.movies, provider.series, provider.animes, provider.music, provider.ebook];
+        return [provider.cat.movies, provider.cat.series, provider.cat.animes, provider.cat.music, provider.cat.ebook];
     }
     needLogged() {
         return true;
     }
     _convertCat(cat) {
         let tab = [];
-        tab[provider.movies] = "category=2145&sub_category=2183";
-        tab[provider.series] = "category=2145&sub_category=2184";
-        tab[provider.animes] = "category=2145&sub_category=2179";
-        tab[provider.music] = "category=2139&sub_category=2148";
-        tab[provider.ebook] = "category=2140";
+        tab[provider.cat.movies] = "category=2145&sub_category=2183";
+        tab[provider.cat.series] = "category=2145&sub_category=2184";
+        tab[provider.cat.animes] = "category=2145&sub_category=2179";
+        tab[provider.cat.music] = "category=2139&sub_category=2148";
+        tab[provider.cat.ebook] = "category=2140";
         return (tab[cat] || "");
     }
     search(query, cat, baseUrl) {

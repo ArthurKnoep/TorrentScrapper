@@ -1,6 +1,7 @@
 const cookieSession = require('cookie-session');
 const db = require('./database');
 const utils = require('./utils');
+const provider = require('./provider');
 
 const CookieSession = cookieSession({
     name: 'session',
@@ -40,12 +41,25 @@ function launchQuery(socket, providerList, query, cat) {
         let name = providerList.provider[i];
         provider.search(query, cat, providerList.baseUrl[i])
         .then((data) => {
+            for (let i = 0; data[i]; i++) {
+                data[i].quality = __(data[i].quality);
+                data[i].language = __(data[i].language);
+            }
             socket.emit('resp', {source: name, code: "OK", data: data});
         })
         .catch((err) => {
             socket.emit('resp', {source: name, code: "KO", msg: err});
         });
     }
+}
+
+function getHeader(cat) {
+    let head = [];
+
+    for (let i = 0; provider.head[cat][i]; i++) {
+        head.push(__(provider.head[cat][i]));
+    }
+    return head;
 }
 
 function listen(socket) {
@@ -59,22 +73,22 @@ function listen(socket) {
         let req = {headers: {cookie: "session="+data.session1+"; session.sig="+data.session2}}, res = {}, next = () => {};
         CookieSession(req, res, next);
         if (!req.session || !req.session.connected) {
-            socket.emit('resp', {code: "NOT_CONNECTED"});
+            socket.emit('resp', {code: "NOT_CONNECTED", msg: __("You are not registered")});
             return;
         }
         try {
             sources = db.getData('/config/provider');
         } catch (err) {
-            socket.emit('resp', {code: "CONF_ERR"});
+            socket.emit('resp', {code: "CONF_ERR", msg: __("Unkown error in configuration file")});
             return;
         }
         let check = checkProviderCat(sources, data.categorie);
         if (check.nb == 0) {
-            socket.emit('resp', {code: "NO_PROVIDER"});
+            socket.emit('resp', {code: "NO_PROVIDER", msg: __("No provider available for this search")});
             return;
         }
         launchQuery(socket, check, data.query, data.categorie);
-        socket.emit('resp', {code: 'OK', sourceIncomming: check.provider});
+        socket.emit('resp', {code: 'OK', sourceIncomming: check.provider, head: getHeader(data.categorie)});
     });
 }
 

@@ -72,5 +72,22 @@
 	"Music": "Musique",
 	"Ebook": "Ebook",
 	"is a project": "est un project",
-	"developped by": "developpé par"
+	"developped by": "developpé par",
+	"Size": "Taille",
+	"Action": "Action",
+	"No provider available for this search": "Pas de source disponible pour cette recherche",
+	"You are not registered": "Vous n'êtes pas connecté",
+	"Unkown error in configuration file": "Erreur inconnu dans le fichier de configuration",
+	"Quality": "Qualité",
+	"Language": "Langue",
+	"Seeds / Peers": "Seeds / Peers",
+	"Actions": "Actions",
+	"English": "Anglais",
+	"720p": "720p",
+	"1080p": "1080p",
+	"3D": "3D",
+	"Unknown": "Inconnu",
+	"French": "Français",
+	"VOSTFR": "VOSTFR",
+	"HDTV": "HDTV"
 }

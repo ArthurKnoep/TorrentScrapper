@@ -38,3 +38,11 @@
     cursor: pointer;
     background-color: #1b7fc1 !important;
 }
+
+.seed {
+    color: #87C428;
+}
+
+.peer {
+    color: #C42828;
+}
