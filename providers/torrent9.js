@@ -4,7 +4,7 @@ const url = require('url');
 const provider = require('../provider');
 
 function parseName(name) {
-    let quality;
+    let quality = __("Unknown");
     let language;
     if (/hdtv/i.exec(name)) {
         quality = "HDTV";
@@ -27,6 +27,10 @@ function parseName(name) {
     return {quality: quality, language: language};
 }
 
+function parseUrl(attr) {
+
+}
+
 class Torrent9 {
     getName() {
         return "Torrent9";
@@ -37,6 +41,9 @@ class Torrent9 {
     getCategories() {
         return [provider.cat.movies, provider.cat.series, provider.cat.animes, provider.cat.music, provider.cat.ebook];
     }
+    getIcon() {
+        return "http://www.torrent9.ec/favicon.ico";
+    }
     needLogged() {
         return false;
     }
@@ -44,8 +51,19 @@ class Torrent9 {
         let tab = [];
         tab[provider.cat.movies] = "films";
         tab[provider.cat.series] = "series";
+        tab[provider.cat.ebook] = "ebook";
         return (tab[cat] || "");
     }
+
+    _parseUrl(attr) {
+        let u = /.*href="([^"]*)".*/.exec(attr)[1];
+
+        if (!u.startsWith("http")) {
+            return url.resolve(this.getBaseUrl(), u);
+        }
+        return u;
+    }
+
     search(query, cat, baseUrl) {
         return new Promise((resolve, reject) => {
             let ep = "/search_torrent/{cat}/{query}/page-0";
@@ -72,31 +90,22 @@ class Torrent9 {
                     let size = "";
                     let seeds = -1;
                     let peers = -1;
+                    let path = "#";
                     try {
                         name = elem.childNodes[1].childNodes[2].text;
-                        quality = parseName(name).quality;
-                        language = parseName(name).language;
-                        // if (/hdtv/.exec(name)) {
-                        //     quality = "HDTV";
-                        // }
-                        // if (/720/.exec(name)) {
-                        //     quality = "720p";
-                        // }
-                        // if (/1080/.exec(name)) {
-                        //     quality = "1080p";
-                        // }
-                        // if (/vost/i.exec(name)) {
-                        //     language = "VOSTFR";
-                        // }
-                        // if (/multi/i.exec(name)) {
-                        //     language = "Multi";
-                        // }
-                        // if (/french/i.exec(name)) {
-                        //     language = "French";
-                        // }
+                        if (cat == provider.cat.movies || cat == provider.cat.series) {
+                            quality = parseName(name).quality;
+                            language = parseName(name).language;
+                        } else {
+                            quality = undefined;
+                            language = undefined;
+                        }
                     } catch (err) {
                         continue;
                     }
+                    try {
+                        path = this._parseUrl(elem.childNodes[1].childNodes[2].rawAttrs);
+                    } catch (err) {}
                     try {
                         size = elem.childNodes[3].childNodes[0].text;
                     } catch (err) {}
@@ -106,7 +115,15 @@ class Torrent9 {
                     try {
                         peers = parseInt(elem.childNodes[7].childNodes[0].text);
                     } catch (err) {}
-                    rst.push({name: name, quality: quality, size: size, language: language, seeds: seeds, peers: peers});
+                    rst.push({
+                        name: name,
+                        path: path,
+                        quality: quality,
+                        size: size,
+                        language: language,
+                        seeds: seeds,
+                        peers: peers
+                    });
                 }
                 resolve(rst);
             })

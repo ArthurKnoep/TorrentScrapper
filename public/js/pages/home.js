@@ -1,6 +1,7 @@
 function setTableHeader(header) {
     let $tr = $("thead tr");
     $tr.empty();
+    $tr.append($('<th></th>').text(""));
     for (let i = 0; header[i]; i++) {
         $tr.append($('<th></th>').text(header[i]));
     }
@@ -15,19 +16,36 @@ function addSeedPeers(elem, $dom) {
         .append($('<span></span>').addClass('peer').text(elem.peers)));
 }
 
-function addMovie(elem, $dom) {
-    $dom.append($('<td></td>').text(elem.name));
+function addIcon($dom, icon) {
+    if (icon == "#") {
+        $dom.append($('<td></td>').text(""));
+    } else {
+        $dom.append($('<td></td>').append($("<img>").attr('src', icon).css('height', '20px')));
+    }
+}
+
+function addMovie(elem, $dom, icon) {
+    addIcon($dom, icon);
+    $dom.append($('<td></td>').append($('<a>').attr('href', elem.path).attr('target', '_blank').text(elem.name)));
     $dom.append($('<td></td>').text(elem.size));
     $dom.append($('<td></td>').text(elem.quality));
     $dom.append($('<td></td>').text(elem.language));
     addSeedPeers(elem, $dom);
 }
 
-function addSerie(elem, $dom) {
-    $dom.append($('<td></td>').text(elem.name));
+function addSerie(elem, $dom, icon) {
+    addIcon($dom, icon);
+    $dom.append($('<td></td>').append($('<a>').attr('href', elem.path).attr('target', '_blank').text(elem.name)));
     $dom.append($('<td></td>').text(elem.size));
     $dom.append($('<td></td>').text(elem.quality));
     $dom.append($('<td></td>').text(elem.language));
+    addSeedPeers(elem, $dom);
+}
+
+function addEBook(elem, $dom, icon) {
+    addIcon($dom, icon);
+    $dom.append($('<td></td>').append($('<a>').attr('href', elem.path).attr('target', '_blank').text(elem.name)));
+    $dom.append($('<td></td>').text(elem.size));
     addSeedPeers(elem, $dom);
 }
 
@@ -79,10 +97,13 @@ $('.search-tag').click(function() {
                 let $tr = $('<tr></tr>');
                 switch (categorie) {
                     case 0:
-                        addMovie(elem, $tr);
+                        addMovie(elem, $tr, data.icon);
                         break;
                     case 1:
-                        addSerie(elem, $tr);
+                        addSerie(elem, $tr, data.icon);
+                        break;
+                    case 4:
+                        addEBook(elem, $tr, data.icon);
                         break;
                 }
                 $table.append($tr);

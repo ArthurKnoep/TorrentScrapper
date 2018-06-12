@@ -9,6 +9,9 @@ class YTS {
     getBaseUrl() {
         return "https://yts.am/";
     }
+    getIcon() {
+        return "https://yts.am/assets/images/website/favicon.ico";
+    }
     getCategories() {
         return [provider.cat.movies];
     }
@@ -32,7 +35,14 @@ class YTS {
                 for (let i = 0; jr.data.movies[i]; i++) {
                     let elem = jr.data.movies[i];
                     for (let j = 0; elem.torrents[j]; j++) {
-                        rst.push({name: elem.title, quality: elem.torrents[j].quality, size: elem.torrents[j].size, language: elem.language, seeds: elem.torrents[j].seeds, peers: elem.torrents[j].peers});
+                        rst.push({
+                            name: elem.title,
+                            quality: elem.torrents[j].quality,
+                            size: elem.torrents[j].size,
+                            language: elem.language,
+                            seeds: elem.torrents[j].seeds,
+                            peers: elem.torrents[j].peers
+                        });
                     }
                 }
                 resolve(rst);

@@ -8,6 +8,9 @@ class Ygg {
     getName() {
         return "YGG";
     }
+    getIcon() {
+        return "https://yggtorrent.is/static/img/logotype-mobile.png";
+    }
     getBaseUrl() {
         return "https://yggtorrent.io/";
     }

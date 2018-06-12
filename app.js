@@ -2,7 +2,9 @@ var app = require('express')();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
-server.listen(8086);
+server.listen(8086, () => {
+    console.log("Webserver started on *:8086");
+});
 
 const static = require('serve-static');
 const cookieSession = require('cookie-session');

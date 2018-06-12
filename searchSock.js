@@ -39,16 +39,21 @@ function launchQuery(socket, providerList, query, cat) {
     for (let i = 0; i < providerList.nb; i++) {
         let provider = new providerList.construct[i]();
         let name = providerList.provider[i];
+        let icon = "#";
+        try {
+            icon = provider.getIcon();
+        } catch (err) {}
         provider.search(query, cat, providerList.baseUrl[i])
         .then((data) => {
             for (let i = 0; data[i]; i++) {
                 data[i].quality = __(data[i].quality);
                 data[i].language = __(data[i].language);
             }
-            socket.emit('resp', {source: name, code: "OK", data: data});
+            socket.emit('resp', {source: name, icon: icon, code: "OK", data: data});
         })
         .catch((err) => {
-            socket.emit('resp', {source: name, code: "KO", msg: err});
+            console.log(err);
+            socket.emit('resp', {source: name, icon: icon, code: "KO", msg: err});
         });
     }
 }
