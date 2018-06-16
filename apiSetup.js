@@ -76,7 +76,7 @@ app
     });
 })
 .post('/3', (req, res) => {
-    new Promise((resolve, reject) => {
+    new Promise(async (resolve, reject) => {
         let key = Object.keys(req.body);
         for (let i = 0; key[i]; i++) {
             let tmp;
@@ -93,6 +93,11 @@ app
                 needLogged: req.body[key[i]].needLogged
             };
             if (req.body[key[i]].needLogged) {
+                // try {
+                //     await tmp.getLoginInformation(req.body[key[i]].baseUrl, req.body[key[i]].login, req.body[key[i]].password);
+                // } catch (e) {
+                //     return reject({code: "BADLOGIN", msg: __("Incorrect login for ") + tmp.getName()});
+                // }
                 if (req.body[key[i]].checked)
                     data.auth = {
                         login: req.body[key[i]].login,

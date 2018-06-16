@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const utils = require('./utils');
 const db = require('./database');
+const provider = require('./provider');
 
 app
 .use((req, res, next) => {
@@ -45,7 +46,7 @@ app
             data.push({
                 name: tmp.getName(),
                 categories: tmp.getCategories(),
-                need_logged: tmp.needLogged(),
+                need_logged: tmp.getLoginType() !== provider.authent.none,
                 base_url: tmp.getBaseUrl(),
                 active: (d) ? d.active : false,
                 file: path.join(__dirname, "/providers", rst[i]),

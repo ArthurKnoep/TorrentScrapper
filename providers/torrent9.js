@@ -36,17 +36,18 @@ class Torrent9 {
         return "Torrent9";
     }
     getBaseUrl() {
-        return "http://www.torrent9.ec/";
+        return "http://ww1.torrent9.is/";
     }
     getCategories() {
         return [provider.cat.movies, provider.cat.series, provider.cat.animes, provider.cat.music, provider.cat.ebook];
     }
     getIcon() {
-        return "http://www.torrent9.ec/favicon.ico";
+        return "http://ww1.torrent9.is/favicon.ico";
     }
-    needLogged() {
-        return false;
+    getLoginType() {
+        return provider.authent.none;
     }
+
     _convertCat(cat) {
         let tab = [];
         tab[provider.cat.movies] = "films";
@@ -69,7 +70,8 @@ class Torrent9 {
             let ep = "/search_torrent/{cat}/{query}/page-0";
             ep = ep.replace('{cat}', this._convertCat(cat));
             ep = ep.replace('{query}', query);
-            axios.get(url.resolve(baseUrl, ep))
+            // axios.get(url.resolve(baseUrl, ep))
+            provider.query(url.resolve(baseUrl, ep), "get", undefined, this.getLoginType(), "")
             .then((resp) => {
                 if (!resp.data) {
                     return reject();

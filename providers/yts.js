@@ -15,14 +15,15 @@ class YTS {
     getCategories() {
         return [provider.cat.movies];
     }
-    needLogged() {
-        return false;
+    getLoginType() {
+        return provider.authent.none;
     }
     search(query, cat, baseUrl) {
         return new Promise((resolve, reject) => {
             let ep = "/api/v2/list_movies.json?query_term={query}";
             ep = ep.replace('{query}', query);
-            axios.get(url.resolve(baseUrl, ep))
+            // axios.get(url.resolve(baseUrl, ep))
+            provider.query(url.resolve(baseUrl, ep), "get", undefined, this.getLoginType(), "")
             .then((resp) => {
                 let jr = resp.data;
                 if (!jr || jr.status !== "ok") {
@@ -37,6 +38,7 @@ class YTS {
                     for (let j = 0; elem.torrents[j]; j++) {
                         rst.push({
                             name: elem.title,
+                            path: elem.url,
                             quality: elem.torrents[j].quality,
                             size: elem.torrents[j].size,
                             language: elem.language,

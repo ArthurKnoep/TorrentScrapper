@@ -17,8 +17,29 @@ class Ygg {
     getCategories() {
         return [provider.cat.movies, provider.cat.series, provider.cat.animes, provider.cat.music, provider.cat.ebook];
     }
-    needLogged() {
-        return true;
+    getLoginType() {
+        return provider.authent.cookie;
+    }
+
+    getLoginInformation(baseUrl, login, password) {
+        return new Promise((resolve, reject) => {
+            axios({
+                url: url.resolve(baseUrl, '/user/login'),
+                method: 'POST',
+                header: {
+                    'Content-Type': 'multipart/form-data'
+                },
+                data: {
+                    id: login,
+                    pass: password
+                }
+            }).then((resp) => {
+                console.log(resp.request._header);
+                console.log(resp.data);
+            }).catch((err) => {
+                reject(err);
+            })
+        });
     }
     _convertCat(cat) {
         let tab = [];
@@ -48,7 +69,6 @@ class Ygg {
                 }
                 let ret = [];
                 let rstList = $('.results table tbody tr');
-                // console.log(rstList[0]);
                 for (let i = 0; i < rstList.length; i++) {
                     let name = "";
                     let size = "";
