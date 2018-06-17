@@ -4,34 +4,79 @@
         <h2 class="is-subtitle is-2"><%= __("Edit menu") %></h2>
     </div>
     <% if (menu) {
-        menu.forEach(function(elem) { %>
-        <div class="box">
-            <div class="field is-horizontal">
-                <div class="field-body">
-                    <div class="field">
-                        <label class="label"><%= __("Name") %></label>
-                        <p class="control is-expanded">
-                            <input class="input" type="text" placeholder="<%= __("Name ...") %>" value="<%= elem.text %>">
-                        </p>
-                    </div>
-                    <div class="field">
-                        <label class="label"><%= __("Url") %></label>
-                        <p class="control is-expanded">
-                            <input class="input" type="text" placeholder="<%= __("Url ...") %>" value="<%= elem.url %>">
-                        </p>
-                    </div>
-                    <div class="field">
-                        <label class="label">
-                            <%= __("Open in new tab") %>
-                        </label>
-                        <input type="checkbox" <% if (elem.new_tab) { %>checked<% } %>>
-                    </div>
-                    <div class="field relative">
-                        <a class="delete is-large center-in-relative is-danger"></a>
-                    </div>
+    menu.forEach(function(elem) { %>
+    <div class="box">
+        <div class="field is-horizontal">
+            <div class="field-body">
+                <div class="field">
+                    <label class="label"><%= __("Name") %></label>
+                    <p class="control is-expanded">
+                        <input class="input" type="text" placeholder="<%= __("Name ...") %>" value="<%= elem.text %>">
+                    </p>
+                </div>
+                <div class="field">
+                    <label class="label"><%= __("Url") %></label>
+                    <p class="control is-expanded">
+                        <input class="input" type="text" placeholder="<%= __("Url ...") %>" value="<%= elem.url %>">
+                    </p>
+                </div>
+                <div class="field">
+                    <label class="label">
+                        <%= __("Open in new tab") %>
+                    </label>
+                    <input type="checkbox" <% if (elem.new_tab) { %>checked
+                            <% } %>
+                    >
+                </div>
+                <div class="field relative">
+                    <a class="delete is-large center-in-relative is-danger"></a>
                 </div>
             </div>
         </div>
+    </div>
     <% });
     } %>
+    <div class="field">
+        <div class="control">
+            <button class="button add-menu-entry is-link"><%- __("Add entry") %></button>
+        </div>
+    </div>
+</div>
+<div class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title"><%= __("Add entry") %></p>
+            <button class="delete close-modal" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+            <div class="field name-field">
+                <label class="label"><%- __("Name") %></label>
+                <div class="control">
+                    <input class="input" id="name" type="text" placeholder="<%= __("Name ...") %>">
+                </div>
+            </div>
+
+            <div class="field name-field">
+                <label class="label"><%- __("Url") %></label>
+                <div class="control">
+                    <input class="input" id="url" type="text" placeholder="<%= __("Url ...") %>">
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <label class="checkbox">
+                        <input type="checkbox" id="newTab">
+                        <%= __("Open in new tab") %>
+                    </label>
+                </div>
+            </div>
+        </section>
+
+        <footer class="modal-card-foot">
+            <button class="button close-modal"><%= __("Cancel") %></button>
+            <button class="button is-link"><%= __("Add") %></button>
+        </footer>
+    </div>
 </div>

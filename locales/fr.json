@@ -96,5 +96,10 @@
 	"Actual password": "Mot de passe actuel",
 	"Actual password ...": "Mot de passe actuel ...",
 	"Login information changed with success": "Information de connexion changée avec succès",
-	"Bad Password": "Mauvais mot de passe"
+	"Bad Password": "Mauvais mot de passe",
+	"Server information deleted": "Information du serveur supprimé",
+	"Configured with: ": "Configuré avec: ",
+	"Add": "Ajouter",
+	"Add entry": "Ajouter une entrée",
+	"Cancel": "Annuler"
 }

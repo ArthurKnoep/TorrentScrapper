@@ -18,18 +18,6 @@ const configRoute = require('./configRoute');
 const provider = require('./provider');
 const socketHandler = require('./searchSock');
 
-const torrent9 = require('./providers/torrent9');
-const yts = require('./providers/yts');
-const ygg = require('./providers/ygg');
-
-// const tmp = new torrent9();
-// const tmp = new yts();
-// const tmp = new ygg();
-// console.log(tmp.getName());
-// tmp.search('harry potter', provider.movies, tmp.getBaseUrl())
-// .then((data) => { console.log(data); }).catch((err) => console.error(err));
-
-
 i18n.configure({
     locales:['en', 'fr'],
     directory: __dirname + '/locales',
@@ -56,7 +44,7 @@ app
 .use((req, res, next) => {res.locals.setLocale(util.getLang()); next()})
 .use('/api/setup', apiSetupRoute)
 .use('/api', apiRoute)
-.use('/assets', static('public', {fallthrough: false}))
+.use('/assets', static('assets', {fallthrough: false}))
 .use('/setup', setupRoute)
 .use((req, res, next) => {
     let configState = util.checkConfig();
@@ -85,4 +73,4 @@ app
     req.session.connected = undefined;
     req.session = null;
     res.redirect('/');
-})
+});

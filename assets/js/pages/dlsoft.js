@@ -1,7 +1,26 @@
+function deleteServerInfo(type) {
+    $.ajax({
+        url: '/api/config/dlsoft/'+type,
+        method: 'DELETE',
+        success: function (resp) {
+            if (resp.success) {
+                $('.active-'+type).parent().find('.sub-span').remove();
+                toastr.success(resp.data.msg);
+            } else {
+                toastr.warning(resp.data.msg);
+            }
+        },
+        error: function () {
+            toastr.warning("Error");
+        }
+    });
+}
+
 $('.active-deluge').change(function() {
     if ($(this).is(":checked")) {
         $('.deluge-box').slideDown(350);
     } else {
+        deleteServerInfo("deluge");
         $('.deluge-box').slideUp(350);
     }
 });
@@ -10,16 +29,18 @@ $('.active-transmission').change(function() {
     if ($(this).is(":checked")) {
         $('.transmission-box').slideDown(350);
     } else {
+        deleteServerInfo("transmission");
         $('.transmission-box').slideUp(350);
     }
 });
 
-const $btnDeluge = $('.test-connect-deluge button')
+
+const $btnDeluge = $('.test-connect-deluge button');
 $btnDeluge.click(function() {
     let form = {
         host: $('#deluge-host').val(),
         password: $('#deluge-password').val()
-    }
+    };
     let error = false;
     if (form.host.length < 3) {
         error = true;
@@ -27,7 +48,7 @@ $btnDeluge.click(function() {
     } else {
         $('#deluge-host').removeClass('is-danger');
     }
-    if (form.password.length == 0) {
+    if (form.password.length === 0) {
         error = true;
         $('#deluge-password').addClass('is-danger');
     } else {
@@ -50,42 +71,40 @@ $btnDeluge.click(function() {
     $btnDeluge.addClass('is-loading').removeClass('is-danger');
     $('#deluge-host').removeClass('is-success').removeClass('is-danger');
     $('#deluge-password').removeClass('is-success').removeClass('is-danger');
-    $.ajax('/api/setup/4/deluge', {
+    $.ajax({
+        url: '/api/config/dlsoft/deluge',
         method: 'POST',
-        data: JSON.stringify(form),
-        contentType: "application/json; charset=utf-8",
-        success: function(data) {
-            if (data.success) {
-                $btnDeluge.removeClass('is-loading');
-                $('#deluge-host').addClass('is-success');
-                $('#deluge-password').addClass('is-success');
+        data: form,
+        success: function (resp) {
+            $btnDeluge.removeClass('is-loading');
+            if (resp.success) {
+                $('.active-deluge').parent().append($("<span></span>").addClass('sub-span').text(resp.data.msg));
                 $('.deluge-box').slideUp(350);
-                $('.active-deluge').attr('disabled', 'disabled');
-                $btnDeluge.attr('disabled', 'disabled');
             } else {
-                $btnDeluge.removeClass('is-loading').addClass('is-danger');
-                $('#deluge-host').addClass('is-danger');
-                $('#deluge-password').addClass('is-danger');
+                $btnDeluge.addClass('is-danger');
             }
         },
-        error: function() {
+        error: function () {
             $btnDeluge.removeClass('is-loading').addClass('is-danger');
         }
-    })
+    });
+    console.log(form);
 });
 
-const $btnTransmi = $('.test-connect-transmission button')
-$btnTransmi.click(function() {
+
+
+const $btnTransmi = $('.test-connect-transmission button');
+$btnTransmi.click(function () {
     let $transmi = {
         host: $('#transmi-host'),
         login: $('#transmi-login'),
         password: $('#transmi-password')
-    }
+    };
     let form = {
         host: $transmi.host.val(),
         login: $transmi.login.val(),
         password: $transmi.password.val()
-    }
+    };
     let error = false;
     for (let i in form) {
         if (form[i].length < 3) {
@@ -106,7 +125,7 @@ $btnTransmi.click(function() {
         host = host.substr(0, host.length - 1);
     }
     if (host.indexOf("/transmission/rtc") !== host.length - "/transmission/rtc".length) {
-        host = host += "/transmission/rtc";
+        host += "/transmission/rtc";
     }
     form.host = host;
     $btnTransmi.removeClass('is-danger').addClass('is-loading');
@@ -114,47 +133,22 @@ $btnTransmi.click(function() {
     $transmi.host.removeClass('is-danger').removeClass('is-success');
     $transmi.login.removeClass('is-danger').removeClass('is-success');
     $transmi.password.removeClass('is-danger').removeClass('is-success');
-    $.ajax('/api/setup/4/transmission', {
+    $.ajax('/api/config/dlsoft/transmission', {
         method: 'POST',
-        data: JSON.stringify(form),
-        contentType: "application/json; charset=utf-8",
-        success: function(data) {
+        data: form,
+        success: function (data) {
+            $btnTransmi.removeClass('is-loading');
             if (data.success) {
-                $btnTransmi.removeClass('is-loading');
-                $transmi.host.addClass('is-success');
-                $transmi.login.addClass('is-success');
-                $transmi.password.addClass('is-success');
+                $('.active-transmission').parent().append($("<span></span>").addClass('sub-span').text(data.data.msg));
                 $('.transmission-box').slideUp(350);
-                $('.active-transmission').attr('disabled', 'disabled');
-                $btnTransmi.attr('disabled', 'disabled');
             } else {
-                $btnTransmi.removeClass('is-loading').addClass('is-danger');
-                $transmi.host.addClass('is-danger');
-                $transmi.login.addClass('is-danger');
-                $transmi.password.addClass('is-danger');
-                $('.field-transmi .help').text(data.data.msg);
+                $btnTransmi.addClass('is-danger');
+                toastr.warning(data.data.msg);
             }
         },
-        error: function() {
+        error: function () {
+            toastr.warning("Error");
             $btnTransmi.removeClass('is-loading').addClass('is-danger');
         }
     });
 });
-
-let $validBtn = $('.valid-btn');
-$validBtn.click(function() {
-    $validBtn.addClass('is-loading').remove('is-danger');
-    $.ajax('/api/setup/end', {
-        method: 'POST',
-        success: function(data) {
-            if (data.success) {
-                window.location.href = '/';
-            } else {
-                $validBtn.removeClass('is-loading').addClass('is-danger');
-            }
-        },
-        error: function() {
-            $validBtn.removeClass('is-loading').addClass('is-danger');
-        }
-    })
-})

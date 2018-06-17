@@ -27,7 +27,7 @@ app
         if (!req.body.name || req.body.name.length < 4 || !req.body.language) {
             return reject({code: "INV_PARAM"});
         }
-        if (language.indexOf(req.body.language) == -1) {
+        if (language.indexOf(req.body.language) === -1) {
             return reject({code: "INV_PARAM"});
         }
         try {

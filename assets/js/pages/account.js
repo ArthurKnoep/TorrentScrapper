@@ -1,4 +1,4 @@
-$('button.validate').click(function() {
+$('button.validate').click(function () {
     let data = {
         new_login: $('input[name="newLogin"]').val(),
         new_password: $('input[name="newPassword"]').val(),
@@ -29,10 +29,10 @@ $('button.validate').click(function() {
     $('button.validate').addClass("is-loading");
     console.log(data);
     $.ajax({
-        url: '/api/account',
+        url: '/api/config/account',
         method: "POST",
         data: data,
-        success: function(resp) {
+        success: function (resp) {
             $('button.validate').removeClass("is-loading");
             if (resp.success) {
                 toastr.success(resp.data.msg);
@@ -42,7 +42,8 @@ $('button.validate').click(function() {
                 $('button.validate').addClass("is-danger");
             }
         },
-        error: function() {
+        error: function () {
+            toastr.warning("Error");
             $('button.validate').removeClass("is-loading");
             $('button.validate').addClass("is-danger");
         }
