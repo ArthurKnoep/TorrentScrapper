@@ -1,0 +1,97 @@
+<section class="section">
+    <div class="container">
+        <div class="notification content">
+            <h2 class="subtitle is-2">
+                <%= __("Downloading software") %>
+            </h2>
+            <p class="subtitle">
+                <%= __("Set up a torrent downloading software") %> :
+            </p>
+            <div class="spacer"></div>
+            <div class="field">
+                <div class="control">
+                    <label class="checkbox">
+                        <input type="checkbox" class="active-deluge" <% if (typeof deluge.host !== "undefined") { %><%= "checked" %><% } %>>
+                        <%= __("Use Deluge") %>
+                        <% if (typeof deluge.host !== "undefined") { %>
+                             <span class="sub-span"><%= __("Configured with: ") + deluge.host.substr(0, deluge.host.length - 5) %></span>
+                        <% } %>
+                    </label>
+                </div>
+            </div>
+            <div class="box deluge-box hide">
+                <div class="content">
+                    <h4 class="is-subtitle is-4"><%= __("Deluge") %></h4>
+                    <div class="field">
+                        <label class="label"><%= __("Host") %></label>
+                        <div class="control">
+                            <input class="input" id="deluge-host" type="text" placeholder="<%= __("Deluge host ...") %>">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label"><%= __("Password") %></label>
+                        <div class="control">
+                            <input class="input" id="deluge-password" type="password" placeholder="<%= __("Deluge password ...") %>">
+                        </div>
+                    </div>
+                    <div class="field test-connect-deluge">
+                        <div class="control">
+                            <button class="button is-link"><%= __("Connect") %></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="spacer"></div>
+            <div class="field">
+                <div class="control">
+                    <label class="checkbox">
+                        <input type="checkbox" class="active-transmission" <% if (typeof transmission.host !== "undefined") { %><%= "checked" %><% } %>>
+                        <%= __("Use Transmission") %>
+                        <% if (typeof transmission.host !== "undefined") { %>
+                            <span class="sub-span"><%= __("Configured with: ") + transmission.host.substr(0, transmission.host.length - 17) %></span>
+                        <% } %>
+                    </label>
+                </div>
+            </div>
+            <div class="box transmission-box hide">
+                <div class="content">
+                    <h4 class="is-subtitle is-4"><%= __("Transmission") %></h4>
+                    <div class="field is-horizontal">
+                        <div class="field-body">
+                            <div class="field">
+                                <label class="label"><%= __("Host") %></label>
+                                <p class="control is-expanded">
+                                    <input class="input" id="transmi-host" type="text" placeholder="<%= __("Transmission host ...") %>">
+                                </p>
+                            </div>
+                            <div class="field">
+                                <label class="label"><%= __("Username") %></label>
+                                <p class="control is-expanded">
+                                    <input class="input" id="transmi-login" type="text" placeholder="<%= __("Transmission login ...") %>">
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field field-transmi">
+                        <label class="label"><%= __("Password") %></label>
+                        <div class="control">
+                            <input class="input" id="transmi-password" type="password" placeholder="<%= __("Transmission password ...") %>">
+                        </div>
+                        <p class="help is-danger"></p>
+                    </div>
+                    <div class="field test-connect-transmission">
+                        <div class="control">
+                            <button class="button is-link"><%= __("Connect") %></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="spacer"></div>-->
+            <!--<div class="field validate">-->
+                <!--<div class="control">-->
+                    <!--<button class="button valid-btn is-link"><%= __("Validate") %></button>-->
+                <!--</div>-->
+            <!--</div>-->
+        </div>
+    </div>
+</section>

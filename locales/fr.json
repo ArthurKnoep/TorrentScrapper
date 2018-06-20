@@ -71,7 +71,7 @@
 	"Animes": "Animés",
 	"Music": "Musique",
 	"Ebook": "Ebook",
-	"is a project": "est un project",
+	"is a project": "est un projet",
 	"developped by": "developpé par",
 	"Size": "Taille",
 	"Action": "Action",
@@ -101,5 +101,10 @@
 	"Configured with: ": "Configuré avec: ",
 	"Add": "Ajouter",
 	"Add entry": "Ajouter une entrée",
-	"Cancel": "Annuler"
+	"Cancel": "Annuler",
+	"The provider requested was not found": "La source demandée n'a pas été trouvé",
+	"The provider is currently disabled": "La source est actuellement désactivé",
+	"Multi": "Multi",
+	"4k": "4k",
+	"French - Quebec": "Français - Québec"
 }

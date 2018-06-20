@@ -1,13 +1,14 @@
 $btnSend = $('input[type=submit]');
-$btnSend.click(function() {
+
+function login() {
     let $elem = {
         login: $('#login'),
         password: $('#password')
-    }
+    };
     let form = {
         login: $elem.login.val(),
         password: $elem.password.val()
-    }
+    };
     let error = false;
     for (let i in form) {
         if (form[i].length < 3) {
@@ -36,4 +37,11 @@ $btnSend.click(function() {
             $btnSend.removeClass('is-loading').addClass('is-danger');
         }
     })
+}
+
+$btnSend.click(login);
+
+$('#password').keypress(function(evt) {
+    if (evt.which === 13)
+        login();
 });

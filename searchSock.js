@@ -28,7 +28,6 @@ function checkProviderCat(sources, cat) {
                 }
             } catch (err) {
                 console.log(err);
-                continue;
             }
         }
     }
@@ -71,7 +70,7 @@ function listen(socket) {
     socket.on('search', (data) => {
         let sources;
 
-        if (!data.session1 || !data.session2 || !data.query || typeof data.categorie != "number") {
+        if (!data.session1 || !data.session2 || !data.query || typeof data.categorie !== "number") {
             socket.emit('resp', {code: "INV_PARAM"});
             return;
         }
@@ -88,7 +87,7 @@ function listen(socket) {
             return;
         }
         let check = checkProviderCat(sources, data.categorie);
-        if (check.nb == 0) {
+        if (check.nb === 0) {
             socket.emit('resp', {code: "NO_PROVIDER", msg: __("No provider available for this search")});
             return;
         }

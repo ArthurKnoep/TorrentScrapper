@@ -5,7 +5,7 @@ const provider = require('../provider');
 
 function parseName(name) {
     let quality = __("Unknown");
-    let language;
+    let language = __("Unknown");
     if (/hdtv/i.exec(name)) {
         quality = "HDTV";
     }
@@ -36,13 +36,13 @@ class Torrent9 {
         return "Torrent9";
     }
     getBaseUrl() {
-        return "http://ww1.torrent9.is/";
+        return "http://www.torrent9.ec/";
     }
     getCategories() {
         return [provider.cat.movies, provider.cat.series, provider.cat.animes, provider.cat.music, provider.cat.ebook];
     }
     getIcon() {
-        return "http://ww1.torrent9.is/favicon.ico";
+        return "http://www.torrent9.ec/favicon.ico";
     }
     getLoginType() {
         return provider.authent.none;
@@ -52,6 +52,8 @@ class Torrent9 {
         let tab = [];
         tab[provider.cat.movies] = "films";
         tab[provider.cat.series] = "series";
+        // tab[provider.cat.animes] = "series";
+        tab[provider.cat.music] = "musique";
         tab[provider.cat.ebook] = "ebook";
         return (tab[cat] || "");
     }
@@ -95,7 +97,7 @@ class Torrent9 {
                     let path = "#";
                     try {
                         name = elem.childNodes[1].childNodes[2].text;
-                        if (cat == provider.cat.movies || cat == provider.cat.series) {
+                        if (parseInt(cat) === provider.cat.movies || parseInt(cat) === provider.cat.series || parseInt(cat) === provider.cat.animes) {
                             quality = parseName(name).quality;
                             language = parseName(name).language;
                         } else {

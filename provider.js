@@ -21,7 +21,7 @@ const authent = {
     "cookie": 1,
     "bearer": 2,
     "basic": 3
-}
+};
 
 function cookieAuthent(req, loginInformation) {
     req.headers = (req.headers || {});

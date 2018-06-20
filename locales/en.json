@@ -57,5 +57,14 @@
 	"1080p": "1080p",
 	"3D": "3D",
 	"HDTV": "HDTV",
-	"VOSTFR": "VOSTFR"
+	"VOSTFR": "VOSTFR",
+	"The provider requested was not found": "The provider requested was not found",
+	"The provider is currently disabled": "The provider is currently disabled",
+	"Movies": "Movies",
+	"Series": "Series",
+	"Animes": "Animes",
+	"Music": "Music",
+	"Ebook": "Ebook",
+	"is a project": "is a project",
+	"developped by": "developped by"
 }

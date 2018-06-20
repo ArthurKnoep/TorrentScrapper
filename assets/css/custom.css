@@ -39,6 +39,14 @@
     background-color: #1b7fc1 !important;
 }
 
+table tbody td {
+    vertical-align: middle !important;
+}
+
+.btn-dl {
+    text-align: center;
+}
+
 .seed {
     color: #87C428;
 }

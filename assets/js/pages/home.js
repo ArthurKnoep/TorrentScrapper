@@ -54,7 +54,7 @@ $('.search-tag').click(function() {
     let error = false;
     let nb_rst = 0;
 
-    if ($('#search').val().length == 0) {
+    if ($('#search').val().length === 0) {
         error = true;
         $('#search').addClass('is-danger');
     } else {
@@ -82,12 +82,12 @@ $('.search-tag').click(function() {
     let data_incom = 0;
     socket.on('resp', function(data) {
         console.log(data);
-        if (data.code != "OK") {
+        if (data.code !== "OK") {
             toastr.warning(data.msg);
             $('#search').parent().removeClass('is-loading').find('.icon').show();
             return;
         }
-        if (data.code == 'OK' && typeof data.sourceIncomming !== "undefined") {
+        if (data.code === 'OK' && typeof data.sourceIncomming !== "undefined") {
             nb_rst = data.sourceIncomming.length;
             setTableHeader(data.head);
         } else {
