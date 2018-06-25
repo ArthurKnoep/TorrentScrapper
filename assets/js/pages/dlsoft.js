@@ -39,6 +39,7 @@ const $btnDeluge = $('.test-connect-deluge button');
 $btnDeluge.click(function() {
     let form = {
         host: $('#deluge-host').val(),
+        path: $('#deluge-path').val(),
         password: $('#deluge-password').val()
     };
     let error = false;
@@ -47,6 +48,12 @@ $btnDeluge.click(function() {
         $('#deluge-host').addClass('is-danger');
     } else {
         $('#deluge-host').removeClass('is-danger');
+    }
+    if (form.path.length < 3) {
+        error = true;
+        $('#deluge-path').addClass('is-danger');
+    } else {
+        $('#deluge-path').removeClass('is-danger');
     }
     if (form.password.length === 0) {
         error = true;
@@ -70,6 +77,7 @@ $btnDeluge.click(function() {
     form.host = host;
     $btnDeluge.addClass('is-loading').removeClass('is-danger');
     $('#deluge-host').removeClass('is-success').removeClass('is-danger');
+    $('#deluge-path').removeClass('is-success').removeClass('is-danger');
     $('#deluge-password').removeClass('is-success').removeClass('is-danger');
     $.ajax({
         url: '/api/config/dlsoft/deluge',
@@ -88,7 +96,6 @@ $btnDeluge.click(function() {
             $btnDeluge.removeClass('is-loading').addClass('is-danger');
         }
     });
-    console.log(form);
 });
 
 
@@ -98,11 +105,13 @@ $btnTransmi.click(function () {
     let $transmi = {
         host: $('#transmi-host'),
         login: $('#transmi-login'),
+        path: $('#transmi-path'),
         password: $('#transmi-password')
     };
     let form = {
         host: $transmi.host.val(),
         login: $transmi.login.val(),
+        path: $transmi.path.val(),
         password: $transmi.password.val()
     };
     let error = false;
@@ -132,6 +141,7 @@ $btnTransmi.click(function () {
     $('.field-transmi .help').text('');
     $transmi.host.removeClass('is-danger').removeClass('is-success');
     $transmi.login.removeClass('is-danger').removeClass('is-success');
+    $transmi.path.removeClass('is-danger').removeClass('is-success');
     $transmi.password.removeClass('is-danger').removeClass('is-success');
     $.ajax('/api/config/dlsoft/transmission', {
         method: 'POST',

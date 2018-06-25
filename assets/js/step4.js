@@ -18,6 +18,7 @@ const $btnDeluge = $('.test-connect-deluge button');
 $btnDeluge.click(function() {
     let form = {
         host: $('#deluge-host').val(),
+        path: $('#deluge-path').val(),
         password: $('#deluge-password').val()
     };
     let error = false;
@@ -26,6 +27,12 @@ $btnDeluge.click(function() {
         $('#deluge-host').addClass('is-danger');
     } else {
         $('#deluge-host').removeClass('is-danger');
+    }
+    if (form.path.length === 0) {
+        error = true;
+        $('#deluge-path').addClass('is-danger');
+    } else {
+        $('#deluge-path').removeClass('is-danger');
     }
     if (form.password.length === 0) {
         error = true;
@@ -49,6 +56,7 @@ $btnDeluge.click(function() {
     form.host = host;
     $btnDeluge.addClass('is-loading').removeClass('is-danger');
     $('#deluge-host').removeClass('is-success').removeClass('is-danger');
+    $('#deluge-path').removeClass('is-success').removeClass('is-danger');
     $('#deluge-password').removeClass('is-success').removeClass('is-danger');
     $.ajax('/api/setup/4/deluge', {
         method: 'POST',
@@ -58,6 +66,7 @@ $btnDeluge.click(function() {
             if (data.success) {
                 $btnDeluge.removeClass('is-loading');
                 $('#deluge-host').addClass('is-success');
+                $('#deluge-path').addClass('is-success');
                 $('#deluge-password').addClass('is-success');
                 $('.deluge-box').slideUp(350);
                 $('.active-deluge').attr('disabled', 'disabled');
@@ -65,6 +74,7 @@ $btnDeluge.click(function() {
             } else {
                 $btnDeluge.removeClass('is-loading').addClass('is-danger');
                 $('#deluge-host').addClass('is-danger');
+                $('#deluge-path').addClass('is-danger');
                 $('#deluge-password').addClass('is-danger');
             }
         },
@@ -79,11 +89,13 @@ $btnTransmi.click(function() {
     let $transmi = {
         host: $('#transmi-host'),
         login: $('#transmi-login'),
+        path: $('#transmi-path'),
         password: $('#transmi-password')
     };
     let form = {
         host: $transmi.host.val(),
         login: $transmi.login.val(),
+        path: $transmi.path.val(),
         password: $transmi.password.val()
     };
     let error = false;
@@ -113,6 +125,7 @@ $btnTransmi.click(function() {
     $('.field-transmi .help').text('');
     $transmi.host.removeClass('is-danger').removeClass('is-success');
     $transmi.login.removeClass('is-danger').removeClass('is-success');
+    $transmi.path.removeClass('is-danger').removeClass('is-success');
     $transmi.password.removeClass('is-danger').removeClass('is-success');
     $.ajax('/api/setup/4/transmission', {
         method: 'POST',
@@ -123,6 +136,7 @@ $btnTransmi.click(function() {
                 $btnTransmi.removeClass('is-loading');
                 $transmi.host.addClass('is-success');
                 $transmi.login.addClass('is-success');
+                $transmi.path.removeClass('is-danger').removeClass('is-success');
                 $transmi.password.addClass('is-success');
                 $('.transmission-box').slideUp(350);
                 $('.active-transmission').attr('disabled', 'disabled');
@@ -131,6 +145,7 @@ $btnTransmi.click(function() {
                 $btnTransmi.removeClass('is-loading').addClass('is-danger');
                 $transmi.host.addClass('is-danger');
                 $transmi.login.addClass('is-danger');
+                $transmi.path.addClass('is-danger');
                 $transmi.password.addClass('is-danger');
                 $('.field-transmi .help').text(data.data.msg);
             }

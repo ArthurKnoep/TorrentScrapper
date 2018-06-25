@@ -7,10 +7,113 @@ function setTableHeader(header) {
     }
 }
 
+function launchDelugeDl($btn, needSearch, url, provider) {
+    let apiUrl = '/api/dl/deluge';
+    if (!needSearch)
+        apiUrl += '/torrent';
+    $.ajax({
+        url: apiUrl,
+        method: 'POST',
+        data: {
+            url: url,
+            provider: provider
+        },
+        success: function (resp) {
+            $btn.removeClass('is-loading');
+            if (resp.success) {
+                $btn.removeClass('is-link').addClass('is-primary');
+                toastr.success(resp.data.msg);
+            } else {
+                $btn.addClass('is-danger');
+                toastr.warning(resp.data.msg);
+            }
+        },
+        error: function () {
+            $btn.removeClass('is-loading').addClass('is-danger');
+            toastr.warning('Error');
+        }
+    });
+}
+
+function launchTransmissionDl($btn, needSearch, url, provider) {
+    let apiUrl = '/api/dl/transmission';
+    if (!needSearch)
+        apiUrl += '/torrent';
+    $.ajax({
+        url: apiUrl,
+        method: 'POST',
+        data: {
+            url: url,
+            provider: provider
+        },
+        success: function (resp) {
+            $btn.removeClass('is-loading');
+            if (resp.success) {
+                $btn.removeClass('is-link').addClass('is-primary');
+                toastr.success(resp.data.msg);
+            } else {
+                $btn.addClass('is-danger');
+                toastr.warning(resp.data.msg);
+            }
+        },
+        error: function () {
+            $btn.removeClass('is-loading').addClass('is-danger');
+            toastr.warning('Error');
+        }
+    });
+}
+
+function askDl($btn, needSearch, url, provider) {
+    $('.modal').addClass('is-active');
+    $('.modal .deluge').off('click');
+    $('.modal .deluge').on('click', function () {
+        $('.modal').removeClass('is-active');
+        launchDelugeDl($btn, needSearch, url, provider);
+    });
+
+    $('.modal .transmi').off('click');
+    $('.modal .transmi').on('click', function () {
+        $('.modal').removeClass('is-active');
+        launchTransmissionDl($btn, needSearch, url, provider);
+    });
+
+    $('.close-modal').off('click');
+    $('.close-modal').on('click', function () {
+        $btn.removeClass('is-loading');
+        $('.modal').removeClass('is-active');
+    });
+}
+
+function dlMyself() {
+    let $btn = $(this);
+    $btn.addClass('is-loading');
+    let url = $(this).parent().parent().find('.link').attr('href');
+    let provider = $(this).parent().parent().attr('provider');
+    let torrentUrl = $(this).parent().parent().attr('torrent-url');
+    $.ajax({
+        url: '/api/dl/list',
+        method: 'GET',
+        success: function (resp) {
+            if (resp.success) {
+                if (resp.data.deluge && !resp.data.transmission)
+                    launchDelugeDl($btn, !torrentUrl, (torrentUrl) ? torrentUrl : url, provider);
+                else if (!resp.data.deluge && resp.data.transmission)
+                    launchTransmissionDl($btn, !torrentUrl, (torrentUrl) ? torrentUrl : url, provider);
+                else
+                    askDl($btn, !torrentUrl, (torrentUrl) ? torrentUrl : url, provider);
+            } else
+                toastr.warning(resp.data.msg);
+        },
+        error: function () {
+            toastr.warning('Error');
+        }
+    });
+}
+
 function addDLButton($dom) {
     $dom.append($('<td></td>').addClass('btn-dl')
         .append(
-            $('<a></a>').addClass('button is-link')
+            $('<a></a>').addClass('button is-link').click(dlMyself)
                 .append($('<span></span>').addClass('icon is-small')
                     .append($('<i></i>').addClass('fas fa-arrow-down')))));
 }
@@ -32,7 +135,7 @@ function addIcon($dom, icon) {
 
 function addMovie(elem, $dom, icon) {
     addIcon($dom, icon);
-    $dom.append($('<td></td>').append($('<a>').attr('href', elem.path).attr('target', '_blank').text(elem.name)));
+    $dom.append($('<td></td>').append($('<a>').attr('href', elem.path).addClass('link').attr('target', '_blank').text(elem.name)));
     $dom.append($('<td></td>').text(elem.size));
     $dom.append($('<td></td>').text(elem.quality));
     $dom.append($('<td></td>').text(elem.language));
@@ -42,7 +145,7 @@ function addMovie(elem, $dom, icon) {
 
 function addSerie(elem, $dom, icon) {
     addIcon($dom, icon);
-    $dom.append($('<td></td>').append($('<a>').attr('href', elem.path).attr('target', '_blank').text(elem.name)));
+    $dom.append($('<td></td>').append($('<a>').attr('href', elem.path).addClass('link').attr('target', '_blank').text(elem.name)));
     $dom.append($('<td></td>').text(elem.size));
     $dom.append($('<td></td>').text(elem.quality));
     $dom.append($('<td></td>').text(elem.language));
@@ -51,7 +154,7 @@ function addSerie(elem, $dom, icon) {
 
 function addAnime(elem, $dom, icon) {
     addIcon($dom, icon);
-    $dom.append($('<td></td>').append($('<a>').attr('href', elem.path).attr('target', '_blank').text(elem.name)));
+    $dom.append($('<td></td>').append($('<a>').attr('href', elem.path).addClass('link').attr('target', '_blank').text(elem.name)));
     $dom.append($('<td></td>').text(elem.size));
     $dom.append($('<td></td>').text(elem.quality));
     $dom.append($('<td></td>').text(elem.language));
@@ -60,14 +163,14 @@ function addAnime(elem, $dom, icon) {
 
 function addMusic(elem, $dom, icon) {
     addIcon($dom, icon);
-    $dom.append($('<td></td>').append($('<a>').attr('href', elem.path).attr('target', '_blank').text(elem.name)));
+    $dom.append($('<td></td>').append($('<a>').attr('href', elem.path).addClass('link').attr('target', '_blank').text(elem.name)));
     $dom.append($('<td></td>').text(elem.size));
     addSeedPeers(elem, $dom);
 }
 
 function addEBook(elem, $dom, icon) {
     addIcon($dom, icon);
-    $dom.append($('<td></td>').append($('<a>').attr('href', elem.path).attr('target', '_blank').text(elem.name)));
+    $dom.append($('<td></td>').append($('<a>').attr('href', elem.path).addClass('link').attr('target', '_blank').text(elem.name)));
     $dom.append($('<td></td>').text(elem.size));
     addSeedPeers(elem, $dom);
 }
@@ -85,9 +188,9 @@ let nbProvider = 0;
 function launchAllQuery(query, categorie, provider) {
     nbProviderTot = provider.length;
     nbProvider = 0;
-    provider.forEach(function (elem) {
+    provider.forEach(function (prov) {
         $.ajax({
-            url: "/api/search/provider/" + elem,
+            url: "/api/search/provider/" + prov,
             method: "GET",
             data: {
                 query: query,
@@ -100,6 +203,9 @@ function launchAllQuery(query, categorie, provider) {
                     for (let i = 0; rst.data.data[i]; i++) {
                         let elem = rst.data.data[i];
                         let $tr = $('<tr></tr>');
+                        $tr.attr('provider', prov);
+                        if (elem.torrent)
+                            $tr.attr('torrent-url', elem.torrent);
                         switch (categorie) {
                             case 0:
                                 addMovie(elem, $tr, rst.data.icon);
@@ -119,19 +225,17 @@ function launchAllQuery(query, categorie, provider) {
                         }
                         $table.append($tr);
                     }
-                    $('.columns-rst').animate({height: $('.table').height()}, 200, function() {
+                    $('.columns-rst').animate({height: $('.table').height()}, 200, function () {
                         $('.table').fadeIn(350);
                         $('.columns-rst').css('height', '');
                     });
                 }
-                console.log(rst);
             },
-            error: function() {
+            error: function () {
                 incProviderFinish();
                 toastr.warning('Error');
             }
         });
-        console.log(elem);
     });
 }
 
@@ -142,8 +246,7 @@ function launchQuery(query, categorie) {
         data: {
             categorie: categorie
         },
-        success: function(rst) {
-            console.log(rst, rst.success);
+        success: function (rst) {
             if (rst.success) {
                 setTableHeader(rst.data.head);
                 launchAllQuery(query, categorie, rst.data.providers.provider);
@@ -156,12 +259,11 @@ function launchQuery(query, categorie) {
         error: function () {
             $('#search').addClass('is-danger');
             toastr.warning("Error");
-            console.error('nope');
         }
     });
 }
 
-$('.search-tag').click(async function() {
+$('.search-tag').click(async function () {
     let $search = $('#search');
     let query = $search.val();
 
@@ -173,7 +275,7 @@ $('.search-tag').click(async function() {
     $search.removeClass('is-danger');
     $search.parent().addClass('is-loading').find('.icon').hide();
     categorie = parseInt($(this).attr("data-value"));
-    
+
     if ($('.table tbody').childElementCount !== 0)
         $('.columns-rst').animate({height: 0}, 350, function () {
             $('.table tbody').empty();

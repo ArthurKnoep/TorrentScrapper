@@ -125,7 +125,7 @@ app
 })
 .post('/4/deluge', (req, res) => {
     new Promise((resolve, reject) => {
-        if (!req.body.host || req.body.host.length < 3 || !req.body.password || req.body.password.length < 3) {
+        if (!req.body.host || req.body.host.length < 3 || !req.body.path || req.body.path.length < 3 || !req.body.password || req.body.password.length < 3) {
             return reject({code: "INV_PARAM"});
         }
         axios({
@@ -140,6 +140,7 @@ app
             }
             db.push("/config/dlsoft/deluge", {
                 host: req.body.host,
+                path: req.body.path,
                 password: req.body.password
             });
             resolve();
@@ -163,7 +164,7 @@ app
 })
 .post('/4/transmission', (req, res) => {
     new Promise((resolve, reject) => {
-        if (!req.body.host || req.body.host.length < 3 || !req.body.login || req.body.login.length < 3 || !req.body.password || req.body.password.length < 3) {
+        if (!req.body.host || req.body.host.length < 3 || !req.body.path || req.body.path.length < 3 || !req.body.login || req.body.login.length < 3 || !req.body.password || req.body.password.length < 3) {
             return reject({code: "INV_PARAM"});
         }
         axios({
@@ -179,10 +180,11 @@ app
                 if (!data || !data.response) {
                     return reject({code: "ERR", msg: __("The host is unreachable")});
                 }
-                if (data.response.status == 409 && typeof data.response.headers["x-transmission-session-id"] == "string") {
+                if (data.response.status == 409 && typeof data.response.headers["x-transmission-session-id"] === "string") {
                     db.push("/config/dlsoft/transmission", {
                         host: req.body.host,
                         login: req.body.login,
+                        path: req.body.path,
                         password: req.body.password
                     });
                     return resolve();

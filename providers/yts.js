@@ -22,7 +22,6 @@ class YTS {
         return new Promise((resolve, reject) => {
             let ep = "/api/v2/list_movies.json?query_term={query}";
             ep = ep.replace('{query}', query);
-            // axios.get(url.resolve(baseUrl, ep))
             provider.query(url.resolve(baseUrl, ep), "get", undefined, this.getLoginType(), "")
             .then((resp) => {
                 let jr = resp.data;
@@ -40,6 +39,7 @@ class YTS {
                             name: elem.title,
                             path: elem.url,
                             quality: elem.torrents[j].quality,
+                            torrent: elem.torrents[j].url,
                             size: elem.torrents[j].size,
                             language: elem.language,
                             seeds: elem.torrents[j].seeds,

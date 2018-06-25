@@ -58,3 +58,30 @@ table tbody td {
 .sub-span {
     color: #969696;
 }
+
+
+.modal-home .modal-card-body {
+    padding: 0 !important;
+}
+
+.modal-home .soft {
+    display: flex;
+    cursor: pointer;
+    padding: 1em 2em;
+}
+
+.modal-home .soft:hover {
+    background-color: #eaeaea;
+}
+
+.modal-home .soft svg {
+    width: 50px;
+    height: 50px;
+}
+
+.modal-home .soft span {
+    line-height: 50px;
+    font-size: 1.7em;
+    font-weight: 700;
+    margin-left: 2em;
+}

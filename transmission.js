@@ -65,15 +65,15 @@ function addTorrent(host, login, password, url, filepath) {
 
         transmission.addUrl(url, {"download-dir": filepath}, (err, rst) => {
             if (err) {
-                return console.log(err);
+                return reject("Transmission error");
             }
-            var id = rst.id;
-            console.log('Just added a new torrent.');
-            console.log('Torrent ID: ' + id);
-            // console.log('ok2');
+            // var id = rst.id;
+            // console.log('Just added a new torrent.');
+            // console.log('Torrent ID: ' + id);
+            // // console.log('ok2');
             // if (err)
             //     return reject(err);
-            // resolve(rst);
+            resolve(rst);
         })
     });
 }

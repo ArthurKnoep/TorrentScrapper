@@ -19,16 +19,27 @@
             <div class="box deluge-box hide">
                 <div class="content">
                     <h4 class="is-subtitle is-4"><%= __("Deluge") %></h4>
-                    <div class="field">
-                        <label class="label"><%= __("Host") %></label>
-                        <div class="control">
-                            <input class="input" id="deluge-host" type="text" placeholder="<%= __("Deluge host ...") %>">
+                    <div class="field is-horizontal">
+                        <div class="field-body">
+                            <div class="field">
+                                <label class="label"><%= __("Host") %></label>
+                                <div class="control">
+                                    <input class="input" id="deluge-host" type="text" placeholder="<%= __("Deluge host ...") %>">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label"><%= __("Password") %></label>
+                                <div class="control">
+                                    <input class="input" id="deluge-password" type="password" placeholder="<%= __("Deluge password ...") %>">
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="field">
-                        <label class="label"><%= __("Password") %></label>
+                        <label class="label"><%= __("Path") %></label>
                         <div class="control">
-                            <input class="input" id="deluge-password" type="password" placeholder="<%= __("Deluge password ...") %>">
+                            <input class="input" id="deluge-path" type="text" placeholder="<%= __("Deluge path ...") %>">
+                            <p class="help"><%= __("This is the path where the downloaded files will go") %></p>
                         </div>
                     </div>
                     <div class="field test-connect-deluge">
@@ -72,6 +83,13 @@
                             <input class="input" id="transmi-password" type="password" placeholder="<%= __("Transmission password ...") %>">
                         </div>
                         <p class="help is-danger"></p>
+                    </div>
+                    <div class="field">
+                        <label class="label"><%= __("Path") %></label>
+                        <div class="control">
+                            <input class="input" id="transmi-path" type="text" placeholder="<%= __("Transmission path ...") %>">
+                            <p class="help"><%= __("This is the path where the downloaded files will go") %></p>
+                        </div>
                     </div>
                     <div class="field test-connect-transmission">
                         <div class="control">

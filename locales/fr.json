@@ -106,5 +106,13 @@
 	"The provider is currently disabled": "La source est actuellement désactivé",
 	"Multi": "Multi",
 	"4k": "4k",
-	"French - Quebec": "Français - Québec"
+	"French - Quebec": "Français - Québec",
+	"Please login first": "Merci de vous authentifier",
+	"Error in configuration": "Erreur dans la configuration",
+	"Starting download": "Démarrage du téléchargement",
+	"Path": "Chemin",
+	"Deluge path ...": "Chemin ...",
+	"This is the path where the downloaded files will go": "Ceci est l'endroit où seront téléchargés les fichiers",
+	"Transmission path ...": "Chemin ...",
+	"Choose your downloading software": "Choisissez avec quel logiciel continuer"
 }

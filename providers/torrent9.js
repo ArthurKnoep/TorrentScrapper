@@ -136,5 +136,32 @@ class Torrent9 {
             });
         });
     }
+
+    getTorrentFromUrl(uri) {
+        return new Promise((resolve, reject) => {
+            provider.query(uri, "get", undefined, this.getLoginType(), "")
+                .then((resp) => {
+                    if (!resp.data) {
+                        return reject({code: "PROVIDER_QUERY_BODY", msg: __("Unable to query the provider")});
+                    }
+                    let doc;
+                    try {
+                        doc = HTMLParser.parse(resp.data);
+                    } catch (err) {
+                        return reject({code: "PROVIDER_QUERY_PARSE", msg: __("Unable to parse the response from the provider")});
+                    }
+                    let rstList = doc.querySelectorAll(".download-btn .download");
+                    if (rstList.length === 0)
+                        return reject();
+                    let attr = rstList[0].rawAttrs;
+                    attr = attr.substr(attr.indexOf("href=\""));
+                    attr = attr.substr(6);
+                    resolve(url.resolve(this.getBaseUrl(), attr.substr(0, attr.length - 1)));
+                })
+                .catch(() => {
+                    reject({code: "PROVIDER_QUERY", msg: __("Unable to query the provider")});
+                });
+        });
+    }
 }
 module.exports = Torrent9;
