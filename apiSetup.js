@@ -102,7 +102,7 @@ app
                     data.auth = {
                         login: req.body[key[i]].login,
                         password: req.body[key[i]].password,
-                    }
+                    };
                 else
                     data.auth = {};
             }

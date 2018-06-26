@@ -59,6 +59,10 @@ table tbody td {
     color: #969696;
 }
 
+.marge-auto {
+    margin: auto;
+}
+
 
 .modal-home .modal-card-body {
     padding: 0 !important;

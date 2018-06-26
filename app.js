@@ -107,4 +107,7 @@ app
         req.session.connected = undefined;
         req.session = null;
         res.redirect('/');
+    })
+    .use((req, res) => {
+        res.status(404).send('<h1>Not found</h1>');
     });

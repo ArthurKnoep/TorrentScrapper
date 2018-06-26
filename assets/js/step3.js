@@ -8,17 +8,16 @@ $btn.click(function() {
             checked: $($select[i]).is(":checked"),
             file: $($select[i]).attr("data-file"),
             baseUrl: $($select[i]).attr("data-base-url"),
-            needLogged: false
+            needLogged: ($($select[i]).attr("data-need-log") === "true")
         };
         if ($($select[i]).hasClass('need-logged') && $($select[i]).is(':checked')) {
-            data[$($select[i]).attr("data-name")].needLogged = true;
-            if ($('#'+$($select[i]).attr("data-name")+'-login').val().length == 0) {
+            if ($('#'+$($select[i]).attr("data-name")+'-login').val().length === 0) {
                 error = true;
                 $('#'+$($select[i]).attr("data-name")+'-login').addClass('is-danger');
             } else {
                 $('#'+$($select[i]).attr("data-name")+'-login').removeClass('is-danger');
             }
-            if ($('#'+$($select[i]).attr("data-name")+'-password').val().length == 0) {
+            if ($('#'+$($select[i]).attr("data-name")+'-password').val().length === 0) {
                 error = true;
                 $('#'+$($select[i]).attr("data-name")+'-password').addClass('is-danger');
             } else {
@@ -57,4 +56,4 @@ $logBtn.click(function() {
     } else {
         $('.'+$(this).attr('data-toggle')).slideUp(350);
     }
-})
+});

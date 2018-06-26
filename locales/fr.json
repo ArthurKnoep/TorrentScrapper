@@ -114,5 +114,17 @@
 	"Deluge path ...": "Chemin ...",
 	"This is the path where the downloaded files will go": "Ceci est l'endroit où seront téléchargés les fichiers",
 	"Transmission path ...": "Chemin ...",
-	"Choose your downloading software": "Choisissez avec quel logiciel continuer"
+	"Choose your downloading software": "Choisissez avec quel logiciel continuer",
+	"Edit providers": "Editer les sources",
+	"Loaded provider": "Source chargée",
+	"Base url ...": "Base url ...",
+	"Activation": "Activation",
+	"Provider disabled": "Source désactivée",
+	"Provider enabled": "Source activée",
+	"Provider updated": "Source mise à jour",
+	"Other providers": "Autres sources",
+	"Transmission error": "Erreur de Transmission",
+	"Activate": "Activer",
+	"Impossible to load provider file": "Impossible de charger le fichier de la source",
+	"Provider activated": "Source activée"
 }

@@ -1,0 +1,108 @@
+<div class="spacer"></div>
+<div class="container box">
+    <div class="content">
+        <h2 class="is-subtitle is-2"><%= __("Edit providers") %></h2>
+        <div class="box">
+            <div class="content">
+                <h3 class="is-subtitle is-3"><%= __("Loaded provider") %></h3>
+                <% let key = Object.keys(sources_loaded) %>
+                <% for (let i = 0; key[i]; i++) { %>
+                <div class="provider" data-provider-name="<%= key[i] %>">
+                    <div class="field is-horizontal">
+                        <div class="field-body">
+                            <div class="field">
+                                <label class="label"><%= __("Name") %></label>
+                                <p class="control is-expanded">
+                                    <input class="input" type="text" placeholder="<%= __("Name ...") %>" value="<%= key[i] %>" readonly>
+                                </p>
+                            </div>
+                            <div class="field">
+                                <label class="label"><%= __("Base url") %></label>
+                                <p class="control is-expanded">
+                                    <input class="input base-url" type="text" placeholder="<%= __("Base url ...") %>" value="<%= sources_loaded[key[i]].baseUrl %>">
+                                </p>
+                            </div>
+                            <div class="field">
+                                <label class="label">
+                                    <%= __("Activation") %>
+                                </label>
+                                <input type="checkbox" class="activate-provider" <% if (sources_loaded[key[i]].active) { %>checked<% } %>>
+                            </div>
+                        </div>
+                    </div>
+                    <% if (sources_loaded[key[i]].needLogged) { %>
+                    <div class="field is-horizontal">
+                        <div class="field-body">
+                            <div class="field">
+                                <label class="label"><%= __("Login") %></label>
+                                <p class="control is-expanded">
+                                    <input class="input" type="text" placeholder="<%= __("Login ...") %>"
+                                           value="<%= sources_loaded[key[i]].auth.login %>" readonly>
+                                </p>
+                            </div>
+                            <div class="field">
+                                <label class="label"><%= __("Password") %></label>
+                                <p class="control is-expanded">
+                                    <input class="input" type="password" placeholder="<%= __("Password ...") %>"
+                                           value="Thisisapassword">
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
+                <% if (key[i + 1]) { %>
+                <div class="spacer"></div>
+                <% } %>
+                </div>
+                <% } %>
+            </div>
+        </div>
+
+        <% if (source_desactiv.length) { %>
+        <div class="box">
+            <div class="content">
+                <h3 class="is-subtitle is-3"><%= __("Other providers") %></h3>
+                <% for (let i = 0; source_desactiv[i]; i++) { %>
+                <div class="provider-disable" data-provider-file="<%= source_desactiv[i].file %>" data-provider-authent="<%= source_desactiv[i].authent %>" data-provider-name="<%= source_desactiv[i].name %>">
+                    <div class="field is-horizontal">
+                        <div class="field-body">
+                            <div class="field">
+                                <label class="label"><%= __("Name") %></label>
+                                <p class="control is-expanded">
+                                    <input class="input" type="text" placeholder="<%= __("Name ...") %>" value="<%= source_desactiv[i].name %>" readonly>
+                                </p>
+                            </div>
+                            <div class="field marge-auto">
+                                <button class="button active-provider is-link"><%= __("Activate") %></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <% if (source_desactiv[i].authent) { %>
+                    <div class="field is-horizontal">
+                        <div class="field-body">
+                            <div class="field">
+                                <!--<label class="label"><%= __("Name") %></label>-->
+                                <p class="control is-expanded">
+                                    <input class="input login" type="text" placeholder="<%= __("Login ...") %>">
+                                </p>
+                            </div>
+                            <div class="field">
+                                <!--<label class="label"><%= __("Name") %></label>-->
+                                <p class="control is-expanded">
+                                    <input class="input password" type="text" placeholder="<%= __("Password ...") %>">
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
+                    <% if (source_desactiv[i + 1]) { %>
+                    <div class="spacer"></div>
+                    <% } %>
+                </div>
+                <% } %>
+            </div>
+        </div>
+        <% } %>
+    </div>
+</div>

@@ -4,6 +4,8 @@ const hash = require('sha256');
 const deluge = require('./deluge');
 const transmission = require('./transmission');
 const db = require('./database');
+const path = require('path');
+const provider = require('./provider');
 const download = require('./apiDownload');
 
 route
@@ -188,6 +190,101 @@ route
                 });
             })
             .catch((data) => {
+                res.json({
+                    success: false,
+                    data: data
+                });
+            });
+    })
+    .put('/config/providers/:provider/base-url', (req, res) => {
+        new Promise((resolve, reject) => {
+            if (!req.body.baseUrl)
+                return reject({code: "INV_PARAM"});
+            let data;
+            try {
+                data = db.getData('/config/provider/' + req.params.provider)
+            } catch (e) {
+                return reject({code: "UNK_PROVIDER", msg: __("Unable to find the provider")});
+            }
+            data.baseUrl = req.body.baseUrl;
+            db.push('/config/provider/' + req.params.provider, data);
+            resolve({msg: __("Provider updated")});
+        })
+            .then((data) => {
+                res.json({
+                    success: true,
+                    data: data
+                });
+            })
+            .catch((data) => {
+                res.json({
+                    success: false,
+                    data: data
+                });
+            });
+    })
+    .put('/config/providers/:provider/:state', (req, res) => {
+        new Promise((resolve, reject) => {
+            if (req.params.state !== "enable" && req.params.state !== "disable")
+                return reject({code: "INV_PARAM"});
+            let data;
+            try {
+                data = db.getData('/config/provider/' + req.params.provider)
+            } catch (e) {
+                return reject({code: "UNK_PROVIDER", msg: __("Unable to find the provider")});
+            }
+            data.active = (req.params.state === "enable");
+            db.push('/config/provider/' + req.params.provider, data);
+            resolve({msg: __("Provider " + req.params.state + "d")});
+        })
+            .then((data) => {
+                res.json({
+                    success: true,
+                    data: data
+                });
+            })
+            .catch((data) => {
+                res.json({
+                    success: false,
+                    data: data
+                });
+            });
+    })
+    .post('/config/provider/active', (req, res) => {
+        new Promise(((resolve, reject) => {
+            if (!req.body.file)
+                return reject({code: "INV_PARAM"});
+            let provi;
+            try {
+                let Construct = require(path.join(__dirname, "providers", req.body.file));
+                provi = new Construct();
+            } catch (e) {
+                return reject({code: "UNK_ERR", msg: __("Impossible to load provider file")})
+            }
+            let data = {
+                file: path.join(__dirname, "providers", req.body.file),
+                baseUrl: provi.getBaseUrl(),
+                active: true,
+                needLogged: (provi.getLoginType() !== provider.authent.none)
+            };
+            if (provi.getLoginType() !== provider.authent.none && (!req.body.login || !req.body.password))
+                return reject({code: "INV_PARAM"});
+            if (provi.getLoginType() !== provider.authent.none) {
+                data.auth = (data.auth || {});
+                data.auth.login = req.body.login;
+                data.auth.password = req.body.password;
+            }
+            db.push('/config/provider/' + provi.getName(), data);
+            resolve({msg: __("Provider activated")});
+        }))
+            .then((data) => {
+                res.json({
+                    success: true,
+                    data: data
+                });
+            })
+            .catch((data) => {
+                console.log(data);
                 res.json({
                     success: false,
                     data: data

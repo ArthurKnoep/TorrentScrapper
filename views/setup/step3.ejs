@@ -12,7 +12,7 @@
             <div class="field">
                 <div class="control">
                     <label class="checkbox">
-                        <input type="checkbox" data-toggle="<%= data[i].name %>-box" data-name="<%= data[i].name %>" data-base-url="<%= data[i].base_url %>" data-file="<%= data[i].file %>" class="provider provider-<%= i %><% if (data[i].need_logged) { %> need-logged<% } %>" <% if (data[i].active) { %>checked<% } %>>
+                        <input type="checkbox" data-toggle="<%= data[i].name %>-box" data-need-log="<%= data[i].need_logged %>" data-name="<%= data[i].name %>" data-base-url="<%= data[i].base_url %>" data-file="<%= data[i].file %>" class="provider provider-<%= i %><% if (data[i].need_logged) { %> need-logged<% } %>" <% if (data[i].active) { %>checked<% } %>>
                         <%= __("Use") + " " + data[i].name %>
                     </label>
                 </div>

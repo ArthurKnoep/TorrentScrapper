@@ -253,7 +253,7 @@ function launchQuery(query, categorie) {
             } else {
                 toastr.warning(rst.data.msg);
                 $('#search').addClass('is-danger');
-                $search.parent().removeClass('is-loading').find('.icon').show();
+                $('#search').parent().removeClass('is-loading').find('.icon').show();
             }
         },
         error: function () {
